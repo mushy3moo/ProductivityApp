@@ -1,4 +1,5 @@
 ﻿using ProductivityApp.Models;
+using ProductivityApp.Services;
 using ProductivityApp.Views;
 using System;
 using System.Collections.ObjectModel;
@@ -16,6 +17,7 @@ namespace ProductivityApp.ViewModels
         public Command LoadItemsCommand { get; }
         public Command AddItemCommand { get; }
         public Command<Item> ItemTapped { get; }
+        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
 
         public ItemsViewModel()
         {
@@ -28,7 +30,7 @@ namespace ProductivityApp.ViewModels
             AddItemCommand = new Command(OnAddItem);
         }
 
-        async Task ExecuteLoadItemsCommand()
+        async System.Threading.Tasks.Task ExecuteLoadItemsCommand()
         {
             IsBusy = true;
 

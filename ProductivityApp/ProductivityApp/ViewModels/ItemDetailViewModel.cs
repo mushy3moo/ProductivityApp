@@ -1,4 +1,5 @@
 ﻿using ProductivityApp.Models;
+using ProductivityApp.Services;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ namespace ProductivityApp.ViewModels
         private string text;
         private string description;
         public string Id { get; set; }
+        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
 
         public string Text
         {

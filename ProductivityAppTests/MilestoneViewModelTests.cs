@@ -4,7 +4,7 @@ using System;
 namespace ProductivityAppTests
 {
     [TestClass]
-    public class UnitTest1
+    public class MilestoneViewModelTests
     {
         [TestMethod]
         public void TestMethod1()
