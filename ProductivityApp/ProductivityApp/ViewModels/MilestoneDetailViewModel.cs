@@ -16,7 +16,7 @@ namespace ProductivityApp.ViewModels
         public string Id { get; set; }
         public IDataStore<Milestone> DataStore => DependencyService.Get<IDataStore<Milestone>>();
 
-        public string Title
+        public string Label
         {
             get => title;
             set => SetProperty(ref title, value);
@@ -47,7 +47,7 @@ namespace ProductivityApp.ViewModels
             {
                 var Milestone = await DataStore.GetItemAsync(milestoneId);
                 Id = Milestone.Id;
-                Title = Milestone.Title;
+                Title = Milestone.Label;
                 Description = Milestone.Description;
             }
             catch (Exception)

@@ -8,20 +8,23 @@ namespace ProductivityApp.Services
 {
     public class MilestoneDataStore : IDataStore<Milestone>
     {
-        readonly List<Milestone> milestones;
+        public readonly List<Milestone> milestones;
 
         public MilestoneDataStore()
         {
-            milestones = new List<Milestone>()
-            {
-                new Milestone { Id = Guid.NewGuid().ToString(), Title = "First item", Description="This is an item description." },
-                new Milestone { Id = Guid.NewGuid().ToString(), Title = "Second item", Description="This is an item description." }
-            };
+            milestones = new List<Milestone>();
         }
 
         public async Task<bool> AddItemAsync(Milestone item)
         {
             milestones.Add(item);
+
+            return await System.Threading.Tasks.Task.FromResult(true);
+        }
+
+        public async Task<bool> AddItemsAsync(List<Milestone> items)
+        {
+            items.ForEach(item => milestones.Add(item));
 
             return await System.Threading.Tasks.Task.FromResult(true);
         }
@@ -37,7 +40,7 @@ namespace ProductivityApp.Services
 
         public async Task<bool> DeleteItemAsync(string id)
         {
-            var oldItem = milestones.Where((Milestone arg) => arg.Id == id).FirstOrDefault();
+            var oldItem = milestones.Where((Milestone m) => m.Id == id).FirstOrDefault();
             milestones.Remove(oldItem);
 
             return await System.Threading.Tasks.Task.FromResult(true);
