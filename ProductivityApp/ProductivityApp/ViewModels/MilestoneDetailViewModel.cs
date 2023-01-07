@@ -11,15 +11,15 @@ namespace ProductivityApp.ViewModels
     class MilestoneDetailViewModel : BaseViewModel
     {
         private string milestoneId;
-        private string title;
+        private string label;
         private string description;
         public string Id { get; set; }
         public IDataStore<Milestone> DataStore => DependencyService.Get<IDataStore<Milestone>>();
 
         public string Label
         {
-            get => title;
-            set => SetProperty(ref title, value);
+            get => label;
+            set => SetProperty(ref label, value);
         }
 
         public string Description
@@ -47,7 +47,7 @@ namespace ProductivityApp.ViewModels
             {
                 var Milestone = await DataStore.GetItemAsync(milestoneId);
                 Id = Milestone.Id;
-                Title = Milestone.Label;
+                Label = Milestone.Label;
                 Description = Milestone.Description;
             }
             catch (Exception)

@@ -1,20 +1,21 @@
-﻿using System;
+﻿using ProductivityApp.Models;
+using ProductivityApp.ViewModels;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace ProductivityApp.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class NewMilestonePage : ContentView
+	public partial class NewMilestonePage : ContentPage
 	{
-		public NewMilestonePage ()
+		public Milestone Milestone { get; set; }
+
+		public NewMilestonePage()
 		{
-			InitializeComponent ();
-		}
+			InitializeComponent();
+            BindingContext = new NewMilestoneViewModel();
+        }
 	}
 }

@@ -14,6 +14,7 @@ namespace ProductivityApp
             InitializeComponent();
 
             DependencyService.Register<MockDataStore>();
+            DependencyService.Register<MilestoneDataStore>();
             MainPage = new AppShell();
         }
 
