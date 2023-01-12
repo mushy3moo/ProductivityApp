@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductivityApp.Android", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductivityApp.iOS", "ProductivityApp\ProductivityApp.iOS\ProductivityApp.iOS.csproj", "{D73EE0FA-34A2-46E7-80EC-A6B6E4586272}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductivityApp", "ProductivityApp\ProductivityApp\ProductivityApp.csproj", "{6A199C6A-074D-4F93-BED0-E3DD69ECC638}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductivityApp", "ProductivityApp\ProductivityApp\ProductivityApp.csproj", "{6A199C6A-074D-4F93-BED0-E3DD69ECC638}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3AA0C0F4-7104-42A3-A60E-65E3D79146F5}"
 	ProjectSection(SolutionItems) = preProject

@@ -1,33 +1,33 @@
-﻿using Xunit;
+﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using ProductivityApp.Models;
 using ProductivityApp.Services;
 using System.Linq;
+using System.Threading.Tasks;
 
-namespace ProductivityAppTests
+namespace ProductivityAppTests.UnitTests
 {
     public class MilestoneDataStoreTests
     {
-        [Fact]
-        public async void AddItemAsync_AddsMilestoneToDataStore()
+        [Test]
+        public async Task AddItemAsync_AddsMilestoneToDataStore()
         {
-            // Arrange
             var expectedMilestone = new Milestone { Id = Guid.NewGuid().ToString(), Label = "Test Milestone" };
             var milestonesDataStore = new MilestoneDataStore();
 
-            // Act
             var result = await milestonesDataStore.AddItemAsync(expectedMilestone);
 
-            // Assert
-            Assert.True(result);
-            Assert.Contains(expectedMilestone, milestonesDataStore.milestones);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result, Is.True);
+                Assert.That(milestonesDataStore.milestones, Does.Contain(expectedMilestone));
+            });
         }
 
-        [Fact]
-        public async void AddItemsAsync_AddsMultipleMilestoneToDataStore()
+        [Test]
+        public async Task AddItemsAsync_AddsMultipleMilestoneToDataStore()
         {
-            // Arrange
             var expectedMilestones = new List<Milestone> { 
                 new Milestone {Id = Guid.NewGuid().ToString(), Label = "Test Milestone 1" },
                 new Milestone {Id = Guid.NewGuid().ToString(), Label = "Test Milestone 2" },
@@ -36,34 +36,33 @@ namespace ProductivityAppTests
             };
             var milestonesDataStore = new MilestoneDataStore();
 
-            // Act
             var result = await milestonesDataStore.AddItemsAsync(expectedMilestones);
 
-            // Assert
-            Assert.True(result);
-            Assert.Contains(expectedMilestones[0], milestonesDataStore.milestones);
-            Assert.Contains(expectedMilestones[1], milestonesDataStore.milestones);
-            Assert.Contains(expectedMilestones[2], milestonesDataStore.milestones);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result, Is.True);
+                Assert.That(milestonesDataStore.milestones, Does.Contain(expectedMilestones[0]));
+                Assert.That(milestonesDataStore.milestones, Does.Contain(expectedMilestones[1]));
+                Assert.That(milestonesDataStore.milestones, Does.Contain(expectedMilestones[2]));
+            });
+            
         }
 
-        [Fact]
-        public async void GetItemAsync_ReturnsCorrectMilestone()
+        [Test]
+        public async Task GetItemAsync_ReturnsCorrectMilestone()
         {
-            // Arrange
             var id = Guid.NewGuid().ToString();
             var milestone = new Milestone { Id = id, Description = "Initial milestone" };
             var milestonesDataStore = new MilestoneDataStore();
             await milestonesDataStore.AddItemAsync(milestone);
 
-            // Act
             var result = await milestonesDataStore.GetItemAsync(id);
 
-            // Assert
-            Assert.Equal(milestone, result);
+            Assert.That(result, Is.EqualTo(milestone));
         }
 
-        [Fact]
-        public async void GetItemsAsync_ReturnsMilestoneList()
+        [Test]
+        public async Task GetItemsAsync_ReturnsMilestoneList()
         {
             // Arrange
             var milestoneList = new List<Milestone>
@@ -75,18 +74,15 @@ namespace ProductivityAppTests
             var milestonesDataStore = new MilestoneDataStore();
             await milestonesDataStore.AddItemsAsync(milestoneList);
 
-            // Act
             var result = await milestonesDataStore.GetItemsAsync();
             result = result.ToList();
 
-            // Assert
-            Assert.Equal(milestoneList, result);
+            Assert.That(result, Is.EqualTo(milestoneList));
         }
 
-        [Fact]
-        public async void UpdateItemAsync_UpdatesCorrectMilestone()
+        [Test]
+        public async Task UpdateItemAsync_UpdatesCorrectMilestone()
         {
-            // Arrange
             var id = Guid.NewGuid().ToString();
             var resultLable = "Updated milestone";
             var milestone = new Milestone { Id = id, Label = "Test Milestone" };
@@ -94,18 +90,18 @@ namespace ProductivityAppTests
             var milestonesDataStore = new MilestoneDataStore();
             await milestonesDataStore.AddItemAsync(milestone);
 
-            // Act
             var result = await milestonesDataStore.UpdateItemAsync(updatedMilestone);
 
-            // Assert
-            Assert.True(result);
-            Assert.Equal(resultLable, milestonesDataStore.GetItemAsync(id).Result.Label);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result, Is.True);
+                Assert.That(milestonesDataStore.GetItemAsync(id).Result.Label, Is.EqualTo(resultLable));
+            });
         }
 
-        [Fact]
-        public async void DeleteItemAsync_RemovesMilestoneFromDataStore()
+        [Test]
+        public async Task DeleteItemAsync_RemovesMilestoneFromDataStore()
         {
-            // Arrange
             var id = "2";
             var milestoneList = new List<Milestone>
                 {
@@ -116,14 +112,15 @@ namespace ProductivityAppTests
             var milestonesDataStore = new MilestoneDataStore();
             await milestonesDataStore.AddItemsAsync(milestoneList);
 
-            // Act
             var deleteResult = await milestonesDataStore.DeleteItemAsync(id);
             var getItemResult = await milestonesDataStore.GetItemAsync(id);
 
-            // Assert
-            Assert.True(deleteResult);
-            Assert.Null(getItemResult);
-            Assert.NotEqual(milestoneList, milestonesDataStore.milestones);
+            Assert.Multiple(() =>
+            {
+                Assert.That(deleteResult, Is.True);
+                Assert.That(getItemResult, Is.Null);
+                Assert.That(milestonesDataStore.milestones, Is.Not.EqualTo(milestoneList));
+            });
         }
     }
 }

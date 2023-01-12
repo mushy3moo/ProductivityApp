@@ -14,6 +14,6 @@ namespace ProductivityApp.Models
         public bool IsCompleted { get; set; }
         public Milestone ParentMilestone { get; set; }
         public Milestone ChildMilestone { get; set; }
-        public List<Task> AttachedTasks { get; set; }
+        public List<Objective> AttachedTasks { get; set; }
     }
 }
