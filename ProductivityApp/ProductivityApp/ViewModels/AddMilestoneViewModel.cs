@@ -8,13 +8,13 @@ using Xamarin.Forms;
 
 namespace ProductivityApp.ViewModels
 {
-    public class NewMilestoneViewModel : BaseViewModel
+    public class AddMilestoneViewModel : BaseViewModel
     {
         private string label;
         private string description;
         public IDataStore<Milestone> DataStore => DependencyService.Get<IDataStore<Milestone>>();
 
-        public NewMilestoneViewModel()
+        public AddMilestoneViewModel()
         {
             SaveCommand = new Command(OnSave, ValidateSave);
             CancelCommand = new Command(OnCancel);

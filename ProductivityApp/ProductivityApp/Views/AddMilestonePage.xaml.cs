@@ -8,14 +8,14 @@ using Xamarin.Forms.Xaml;
 
 namespace ProductivityApp.Views
 {
-	public partial class NewMilestonePage : ContentPage
+	public partial class AddMilestonePage : ContentPage
 	{
 		public Milestone Milestone { get; set; }
 
-		public NewMilestonePage()
+		public AddMilestonePage()
 		{
 			InitializeComponent();
-            BindingContext = new NewMilestoneViewModel();
+            BindingContext = new AddMilestoneViewModel();
         }
 	}
 }

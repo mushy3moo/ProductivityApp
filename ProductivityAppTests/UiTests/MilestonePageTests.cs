@@ -1,64 +1,53 @@
 ﻿using System;
 using NUnit.Framework;
-using ProductivityApp;
 using Xamarin.UITest;
-using Xamarin.UITest.Queries;
-using ProductivityApp.Views;
 using System.Linq;
-using System.Reflection.Emit;
-using System.IO;
+using ProductivityAppTests.UiTests.Pages;
+using ProductivityApp.Models;
 
 namespace ProductivityAppTests.UiTests
 {
-    [TestFixture(Platform.Android)]
-    //[TestFixture(Platform.iOS)]
-    public class MilestonePageTests
+    public class MilestonePageTests : BaseTestFixture
     {
-        IApp app;
-        readonly Platform platform;
-        public MilestonePageTests(Platform platform)
-        {
-            this.platform = platform;
-        }
+        MilestonesPageHelper milestonesPage;
+        AddMilestonePageHelper addMilestonePage;
+        public MilestonePageTests(Platform platform) : base(platform) { }
 
         [SetUp]
-        public void Setup()
+        public virtual void BeforeEachTest()
         {
-            app = AppInitializer.StartApp(platform);
+            milestonesPage = new MilestonesPageHelper();
+            addMilestonePage = new AddMilestonePageHelper();
+        }
+
+        /*
+        [Test]
+        public void FindStuff()
+        {
+            app.Repl();
+        }
+        */
+
+        [Test]
+        public void MenuLoadsMilestonePage()
+        {
+            milestonesPage.NavigateMenu("Milestones");
+
+            milestonesPage.AssertOnPage();
         }
 
         [Test]
-        public void TestMilestonesFlyoutItemLoadsMilestonePage()
+        public void MilestoneAddButtonLoadsNewMilestonePage()
         {
-            //var screenshotName = $"{TestContext.CurrentContext.Test.Name}";
-            app.Tap(c => c.Class("AppCompatImageButton"));
-            app.WaitForElement(c => c.Marked("Milestones"), "Timed out waiting for milestones page", TimeSpan.FromSeconds(30));
-            app.Tap(c => c.Marked("Milestones"));
+            milestonesPage.NavigateMenu("Milestones");
+            milestonesPage.SelectAddButton();
 
-            var result = app.Query(c => c.Marked("Milestones")).FirstOrDefault().Text;
-            //app.Screenshot(screenshotName);
-
-            Assert.That(result, Is.EqualTo("Milestones"));
+            addMilestonePage.AssertOnPage();
         }
 
+
         [Test]
-        public void TestMilestoneAddButtonLoadsNewMilestonePage()
-        {
-            //var screenshotName = $"{TestContext.CurrentContext.Test.Name}";
-
-            app.Tap(c => c.Class("AppCompatImageButton"));
-            app.WaitForElement(c => c.Marked("Milestones"), "Timed out waiting for milestones page", TimeSpan.FromSeconds(30));
-            app.Tap(c => c.Marked("Milestones"));
-
-            app.WaitForElement(c => c.Marked("MilestonesPage_AddButton"), "Timed out waiting for add button on milestones page", TimeSpan.FromSeconds(30));
-            app.Tap(c => c.Marked("MilestonesPage_AddButton"));
-
-            app.WaitForElement(c => c.Marked("Title"), "Timed out waiting for New Milestone Page", TimeSpan.FromSeconds(30));
-        }
-
-        
-        [Test]
-        public void TestMilestonesButtonLoadsMilestonePage()
+        public void MilestonesButtonLoadsMilestonePage()
         {
             var testTitle = "Test Milestone";
             var testDescription = "Test Description";

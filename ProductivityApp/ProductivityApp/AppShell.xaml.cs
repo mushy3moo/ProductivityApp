@@ -14,7 +14,7 @@ namespace ProductivityApp
             Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
             Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
             Routing.RegisterRoute(nameof(MilestoneDetailPage), typeof(MilestoneDetailPage));
-            Routing.RegisterRoute(nameof(NewMilestonePage), typeof(NewMilestonePage));
+            Routing.RegisterRoute(nameof(AddMilestonePage), typeof(AddMilestonePage));
         }
 
         private async void OnMenuItemClicked(object sender, EventArgs e)

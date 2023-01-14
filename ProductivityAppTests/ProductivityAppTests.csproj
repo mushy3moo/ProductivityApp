@@ -61,7 +61,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UiTests\AppInitializer.cs" />
+    <Compile Include="UiTests\AppManager.cs" />
+    <Compile Include="UiTests\BaseTestFixture.cs" />
+    <Compile Include="UiTests\Pages\AddMilestonePageHelper.cs" />
+    <Compile Include="UiTests\Pages\BasePageHelper.cs" />
+    <Compile Include="UiTests\Pages\PlatformQuery.cs" />
+    <Compile Include="UiTests\Pages\MilestonesPageHelper.cs" />
     <Compile Include="UnitTests\MilestoneDataStoreTests.cs" />
     <Compile Include="UiTests\MilestonePageTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

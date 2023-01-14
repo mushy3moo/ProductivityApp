@@ -11,13 +11,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\AddMilestonePage.xaml.cs">
+      <DependentUpon>AddMilestonePage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Update="Views\MilestoneDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\MilestonesPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\NewMilestonePage.xaml">
+    <EmbeddedResource Update="Views\AddMilestonePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

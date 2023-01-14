@@ -16,8 +16,10 @@ namespace ProductivityApp.Views
         public MilestonesPage()
         {
             InitializeComponent();
-
+            
             BindingContext = _viewModel = new MilestonesViewModel();
+            var entry = new Entry();
+            AutomationProperties.SetIsInAccessibleTree(entry, true);
         }
 
         protected override void OnAppearing()

@@ -71,7 +71,7 @@ namespace ProductivityApp.ViewModels
 
         private async void OnAddMilestone(object obj)
         {
-            await Shell.Current.GoToAsync(nameof(NewMilestonePage));
+            await Shell.Current.GoToAsync(nameof(AddMilestonePage));
         }
 
         async void OnMilestoneSelected(Milestone Milestone)

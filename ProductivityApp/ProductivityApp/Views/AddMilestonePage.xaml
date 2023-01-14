@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ProductivityApp.Views.NewMilestonePage"
+             x:Class="ProductivityApp.Views.AddMilestonePage"
              Shell.PresentationMode="ModalAnimated"
-             Title="New Milestone"
+             Title="Add Milestone Page"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              ios:Page.UseSafeArea="true">
     <ContentPage.Content>
