@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using Xamarin.UITest;
+using Xamarin.UITest.Queries;
 using Query = System.Func<Xamarin.UITest.Queries.AppQuery, Xamarin.UITest.Queries.AppQuery>;
 
 
@@ -59,6 +60,36 @@ namespace ProductivityAppTests.UiTests.Pages
 
             app.WaitForElement(c => c.Marked(element), message, timeout);
             app.Tap(c => c.Marked(element));
+        }
+
+        public AppResult GetElementFromQuery(Query element, int index, TimeSpan? timeout = default)
+        {
+            timeout = timeout ?? TimeSpan.FromSeconds(10);
+            var page = this.GetType().Name.Replace("Helper", "");
+            var message = $"Timeout Value {timeout.Value} on page: {page}";
+
+            app.WaitForElement(element, message, timeout);
+            return app.Query(element)[index];
+        }
+
+        public AppResult GetElementFromQuery(string element, int index, TimeSpan? timeout = default)
+        {
+            timeout = timeout ?? TimeSpan.FromSeconds(10);
+            var page = this.GetType().Name.Replace("Helper", "");
+            var message = $"Timeout Value {timeout.Value} on page: {page}";
+
+            app.WaitForElement(c => c.Marked(element), message, timeout);
+            return app.Query(c => c.Marked(element))[index];
+        }
+
+        public AppResult[] GetElements(Query element, TimeSpan? timeout = default)
+        {
+            timeout = timeout ?? TimeSpan.FromSeconds(10);
+            var page = this.GetType().Name.Replace("Helper", "");
+            var message = $"Timeout Value {timeout.Value} on page: {page}";
+
+            app.WaitForElement(element, message, timeout);
+            return app.Query(element);
         }
     }
 }

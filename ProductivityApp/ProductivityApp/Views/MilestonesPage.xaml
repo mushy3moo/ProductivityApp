@@ -8,8 +8,7 @@
              x:Name="BrowseMilestonesPage">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem AutomationProperties.Name="AddButton"
-            Text="Add" Command="{Binding AddMilestoneCommand}" />
+        <ToolbarItem Text="Add" Command="{Binding AddMilestoneCommand}"/>
     </ContentPage.ToolbarItems>
     <!--
       x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
