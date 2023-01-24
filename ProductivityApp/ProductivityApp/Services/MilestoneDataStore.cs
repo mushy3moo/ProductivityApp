@@ -19,14 +19,14 @@ namespace ProductivityApp.Services
         {
             milestones.Add(item);
 
-            return await System.Threading.Tasks.Task.FromResult(true);
+            return await Task.FromResult(true);
         }
 
         public async Task<bool> AddItemsAsync(List<Milestone> items)
         {
             items.ForEach(item => milestones.Add(item));
 
-            return await System.Threading.Tasks.Task.FromResult(true);
+            return await Task.FromResult(true);
         }
 
         public async Task<bool> UpdateItemAsync(Milestone item)
@@ -35,7 +35,7 @@ namespace ProductivityApp.Services
             milestones.Remove(oldItem);
             milestones.Add(item);
 
-            return await System.Threading.Tasks.Task.FromResult(true);
+            return await Task.FromResult(true);
         }
 
         public async Task<bool> DeleteItemAsync(string id)
@@ -43,17 +43,17 @@ namespace ProductivityApp.Services
             var oldItem = milestones.Where((Milestone m) => m.Id == id).FirstOrDefault();
             milestones.Remove(oldItem);
 
-            return await System.Threading.Tasks.Task.FromResult(true);
+            return await Task.FromResult(true);
         }
 
         public async Task<Milestone> GetItemAsync(string id)
         {
-            return await System.Threading.Tasks.Task.FromResult(milestones.FirstOrDefault(s => s.Id == id));
+            return await Task.FromResult(milestones.FirstOrDefault(s => s.Id == id));
         }
 
         public async Task<IEnumerable<Milestone>> GetItemsAsync(bool forceRefresh = false)
         {
-            return await System.Threading.Tasks.Task.FromResult(milestones);
+            return await Task.FromResult(milestones);
         }
     }
 }

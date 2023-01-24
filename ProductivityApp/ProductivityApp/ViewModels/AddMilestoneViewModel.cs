@@ -1,9 +1,9 @@
-﻿using ProductivityApp.Models;
+﻿using Autofac;
+using Autofac.Core;
+using ProductivityApp.Models;
 using ProductivityApp.Services;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Input;
+using System.ComponentModel;
 using Xamarin.Forms;
 
 namespace ProductivityApp.ViewModels
@@ -12,20 +12,18 @@ namespace ProductivityApp.ViewModels
     {
         private string label;
         private string description;
-        public IDataStore<Milestone> DataStore => DependencyService.Get<IDataStore<Milestone>>();
+        private DateTime deadline;
+        private readonly IDataStore<Milestone> _dataStore;
+        public Command SaveCommand { get; }
+        public Command CancelCommand { get; }
 
-        public AddMilestoneViewModel()
+        public AddMilestoneViewModel(IDataStore<Milestone> dataStore)
         {
+            _dataStore = dataStore;
             SaveCommand = new Command(OnSave, ValidateSave);
             CancelCommand = new Command(OnCancel);
             this.PropertyChanged +=
                 (_, __) => SaveCommand.ChangeCanExecute();
-        }
-
-        private bool ValidateSave()
-        {
-            return !String.IsNullOrWhiteSpace(label)
-                && !String.IsNullOrWhiteSpace(description);
         }
 
         public string Label
@@ -40,13 +38,22 @@ namespace ProductivityApp.ViewModels
             set => SetProperty(ref description, value);
         }
 
-        public Command SaveCommand { get; }
-        public Command CancelCommand { get; }
+        public DateTime Deadline
+        {
+            get => deadline;
+            set => SetProperty(ref deadline, value);
+        }
 
         private async void OnCancel()
         {
             // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync("..");
+        }
+
+        private bool ValidateSave()
+        {
+            return !String.IsNullOrWhiteSpace(label)
+                && !String.IsNullOrWhiteSpace(description);
         }
 
         private async void OnSave()
@@ -55,10 +62,11 @@ namespace ProductivityApp.ViewModels
             {
                 Id = Guid.NewGuid().ToString(),
                 Label = label,
-                Description = Description
+                Description = Description,
+                Deadline = Deadline
             };
 
-            await DataStore.AddItemAsync(newMilestone);
+            await _dataStore.AddItemAsync(newMilestone);
 
             // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync("..");

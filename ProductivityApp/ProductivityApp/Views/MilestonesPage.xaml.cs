@@ -1,25 +1,25 @@
-﻿using ProductivityApp.ViewModels;
+﻿using Autofac;
+using ProductivityApp.Models;
+using ProductivityApp.Services;
+using ProductivityApp.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace ProductivityApp.Views
 {
-	public partial class MilestonesPage : ContentPage
+    public partial class MilestonesPage : ContentPage
 	{
-        MilestonesViewModel _viewModel;
+        private readonly MilestonesViewModel _viewModel;
+        private readonly IDataStore<Milestone> _dataStore;
 
         public MilestonesPage()
         {
             InitializeComponent();
-            
-            BindingContext = _viewModel = new MilestonesViewModel();
-            var entry = new Entry();
-            AutomationProperties.SetIsInAccessibleTree(entry, true);
+            using (var scope = App.container.BeginLifetimeScope())
+            {
+                _dataStore = scope.Resolve<IDataStore<Milestone>>();
+            }
+            BindingContext = _viewModel = new MilestonesViewModel(_dataStore); ;
         }
 
         protected override void OnAppearing()

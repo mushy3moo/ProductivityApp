@@ -6,13 +6,11 @@ using Xamarin.Forms;
 
 namespace ProductivityApp
 {
-    public partial class AppShell : Xamarin.Forms.Shell
+    public partial class AppShell : Shell
     {
         public AppShell()
         {
             InitializeComponent();
-            Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
-            Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
             Routing.RegisterRoute(nameof(MilestoneDetailPage), typeof(MilestoneDetailPage));
             Routing.RegisterRoute(nameof(AddMilestonePage), typeof(AddMilestonePage));
         }

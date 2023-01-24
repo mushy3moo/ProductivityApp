@@ -18,10 +18,9 @@ namespace ProductivityAppTests.UiTests
         }
 
         [SetUp]
-        public virtual void StartApp()
+        public virtual void InitializeApp()
         {
             AppManager.StartApp();
         }
     }
-
 }

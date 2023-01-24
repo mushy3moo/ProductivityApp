@@ -1,8 +1,8 @@
-﻿using ProductivityApp.Models;
+﻿using Autofac;
+using ProductivityApp.Models;
+using ProductivityApp.Services;
 using ProductivityApp.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,11 +11,15 @@ namespace ProductivityApp.Views
 	public partial class AddMilestonePage : ContentPage
 	{
 		public Milestone Milestone { get; set; }
-
-		public AddMilestonePage()
+        private readonly IDataStore<Milestone> _dataStore;
+        public AddMilestonePage()
 		{
 			InitializeComponent();
-            BindingContext = new AddMilestoneViewModel();
+            using (var scope = App.container.BeginLifetimeScope())
+            {
+                _dataStore = scope.Resolve<IDataStore<Milestone>>();
+            }
+            BindingContext = new AddMilestoneViewModel(_dataStore);
         }
 	}
 }

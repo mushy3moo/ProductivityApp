@@ -8,24 +8,18 @@ using Xamarin.Forms;
 namespace ProductivityApp.ViewModels
 {
     [QueryProperty(nameof(MilestoneId), nameof(MilestoneId))]
-    class MilestoneDetailViewModel : BaseViewModel
+    public class MilestoneDetailViewModel : BaseViewModel
     {
         private string milestoneId;
         private string label;
         private string description;
+        private DateTime deadline;
         public string Id { get; set; }
-        public IDataStore<Milestone> DataStore => DependencyService.Get<IDataStore<Milestone>>();
+        private readonly IDataStore<Milestone> _dataStore;
 
-        public string Label
+        public MilestoneDetailViewModel(IDataStore<Milestone> dataStore)
         {
-            get => label;
-            set => SetProperty(ref label, value);
-        }
-
-        public string Description
-        {
-            get => description;
-            set => SetProperty(ref description, value);
+            _dataStore = dataStore;
         }
 
         public string MilestoneId
@@ -41,14 +35,33 @@ namespace ProductivityApp.ViewModels
             }
         }
 
-        public async void LoadMilestoneId(string milestoneId)
+        public string Label
+        {
+            get => label;
+            set => SetProperty(ref label, value);
+        }
+
+        public string Description
+        {
+            get => description;
+            set => SetProperty(ref description, value);
+        }
+
+        public DateTime Deadline
+        {
+            get => deadline;
+            set => SetProperty(ref deadline, value);
+        }
+
+        private async void LoadMilestoneId(string milestoneId)
         {
             try
             {
-                var Milestone = await DataStore.GetItemAsync(milestoneId);
+                var Milestone = await _dataStore.GetItemAsync(milestoneId);
                 Id = Milestone.Id;
                 Label = Milestone.Label;
                 Description = Milestone.Description;
+                Deadline = Milestone.Deadline;
             }
             catch (Exception)
             {

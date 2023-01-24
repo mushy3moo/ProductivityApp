@@ -13,7 +13,7 @@
             <Label Text="Description" FontSize="Medium" />
             <Editor Text="{Binding Description, Mode=TwoWay}" AutoSize="TextChanges" FontSize="Medium" Margin="0" />
             <Label Text="Deadline" FontSize="Medium" />
-            <DatePicker Date="{Binding Date, Mode=TwoWay}" FontSize="Medium" />
+            <DatePicker Date="{Binding Deadline, Mode=TwoWay}" FontSize="Medium" />
             <StackLayout Orientation="Horizontal">
                 <Button Text="Cancel" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
                 <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>

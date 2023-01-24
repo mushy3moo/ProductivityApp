@@ -64,7 +64,6 @@ namespace ProductivityAppTests.UnitTests
         [Test]
         public async Task GetItemsAsync_ReturnsMilestoneList()
         {
-            // Arrange
             var milestoneList = new List<Milestone>
                 {
                     new Milestone { Id = "1", Label = "Milestone 1" },
@@ -74,8 +73,8 @@ namespace ProductivityAppTests.UnitTests
             var milestonesDataStore = new MilestoneDataStore();
             await milestonesDataStore.AddItemsAsync(milestoneList);
 
-            var result = await milestonesDataStore.GetItemsAsync();
-            result = result.ToList();
+            var data = await milestonesDataStore.GetItemsAsync();
+            var result = data.ToList();
 
             Assert.That(result, Is.EqualTo(milestoneList));
         }

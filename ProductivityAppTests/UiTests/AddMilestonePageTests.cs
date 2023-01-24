@@ -2,7 +2,7 @@
 using ProductivityAppTests.UiTests.Pages;
 using System;
 using Xamarin.UITest;
-using Xamarin.UITest.Queries;
+using ProductivityApp.Models;
 
 namespace ProductivityAppTests.UiTests
 {
@@ -48,12 +48,11 @@ namespace ProductivityAppTests.UiTests
         public void SaveButtonIsUnavailableWhenFormIsPartiallyFilledWithTitle()
         {
             var expectedText = "Test Milestone";
-            addMilestonePage.SelectTitleText();
-            app.EnterText(expectedText);
-
+            addMilestonePage.EnterTitleText(expectedText);
+            
             addMilestonePage.SelectSaveButton();
-            var resultText = addMilestonePage.GetTitleText(expectedText).Text;
 
+            var resultText = addMilestonePage.GetText(expectedText).Text;
             addMilestonePage.AssertOnPage();
             Assert.That(expectedText, Is.EqualTo(resultText));
         }
@@ -62,12 +61,11 @@ namespace ProductivityAppTests.UiTests
         public void SaveButtonIsUnavailableWhenFormIsPartiallyFilledWithDescription()
         {
             var expectedText = "Test Description";
-            addMilestonePage.SelectDescriptionText();
-            app.EnterText(expectedText);
+            addMilestonePage.EnterDescriptionText(expectedText);
 
             addMilestonePage.SelectSaveButton();
-            var resultText = addMilestonePage.GetDescriptionText(expectedText).Text;
 
+            var resultText = addMilestonePage.GetText(expectedText).Text;
             addMilestonePage.AssertOnPage();
             Assert.That(expectedText, Is.EqualTo(resultText));
         }
@@ -75,20 +73,26 @@ namespace ProductivityAppTests.UiTests
         [Test]
         public void SaveButtonCreatesMilestoneWhenFormIsFilled()
         {
-            var expectedTitle = "Test Milestone";
-            var expectedDescription = "Test Description";
-            AppResult[] milestone;
- 
-            addMilestonePage.SelectTitleText();
-            app.EnterText(expectedTitle);
-            addMilestonePage.SelectDescriptionText();
-            app.EnterText(expectedDescription);
+            var expectedMilestone = new Milestone()
+            {
+                Label = "Test Milestone",
+                Description = "Test Description",
+                Deadline = DateTime.Now,
+            };
+
+            addMilestonePage.EnterTitleText(expectedMilestone.Label);
+            addMilestonePage.EnterDescriptionText(expectedMilestone.Description);
+            addMilestonePage.SelectDeadline(expectedMilestone.Deadline);
             addMilestonePage.SelectSaveButton();
-            milestone = milestonesPage.GetMilestone(0);
 
             milestonesPage.AssertOnPage();
-            Assert.That(milestone[0].Text, Is.EqualTo(expectedTitle));
-            Assert.That(milestone[1].Text, Is.EqualTo(expectedDescription));
+            var milestone = milestonesPage.GetMilestone(0);
+            Assert.Multiple(() =>
+            {
+                Assert.That(milestone[0].Text, Is.EqualTo(expectedMilestone.Label));
+                Assert.That(milestone[1].Text, Is.EqualTo(expectedMilestone.Description));
+                Assert.That(milestone[2].Text, Is.EqualTo(expectedMilestone.Deadline.ToString()));
+            });
         }
     }
 }

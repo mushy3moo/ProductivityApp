@@ -9,18 +9,18 @@ using Xamarin.Forms;
 
 namespace ProductivityApp.ViewModels
 {
-    class MilestonesViewModel : BaseViewModel
+    public class MilestonesViewModel : BaseViewModel
     {
         private Milestone _selectedMilestone;
-
+        private readonly IDataStore<Milestone> _dataStore;
         public ObservableCollection<Milestone> Milestones { get; }
         public Command LoadMilestonesCommand { get; }
         public Command AddMilestoneCommand { get; }
         public Command<Milestone> MilestoneTapped { get; }
-        public IDataStore<Milestone> DataStore => DependencyService.Get<IDataStore<Milestone>>();
 
-        public MilestonesViewModel()
+        public MilestonesViewModel(IDataStore<Milestone> dataStore)
         {
+            _dataStore = dataStore;
             Title = "Milestones";
             Milestones = new ObservableCollection<Milestone>();
             LoadMilestonesCommand = new Command(async () => await ExecuteLoadMilestonesCommand());
@@ -28,29 +28,6 @@ namespace ProductivityApp.ViewModels
             MilestoneTapped = new Command<Milestone>(OnMilestoneSelected);
 
             AddMilestoneCommand = new Command(OnAddMilestone);
-        }
-
-        async System.Threading.Tasks.Task ExecuteLoadMilestonesCommand()
-        {
-            IsBusy = true;
-
-            try
-            {
-                Milestones.Clear();
-                var milestones = await DataStore.GetItemsAsync(true);
-                foreach (var milestone in milestones)
-                {
-                    Milestones.Add(milestone);
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-            finally
-            {
-                IsBusy = false;
-            }
         }
 
         public void OnAppearing()
@@ -74,13 +51,36 @@ namespace ProductivityApp.ViewModels
             await Shell.Current.GoToAsync(nameof(AddMilestonePage));
         }
 
-        async void OnMilestoneSelected(Milestone Milestone)
+        private async void OnMilestoneSelected(Milestone Milestone)
         {
             if (Milestone == null)
                 return;
 
             // This will push the MilestoneDetailPage onto the navigation stack
             await Shell.Current.GoToAsync($"{nameof(MilestoneDetailPage)}?{nameof(MilestoneDetailViewModel.MilestoneId)}={Milestone.Id}");
+        }
+
+        private async Task ExecuteLoadMilestonesCommand()
+        {
+            IsBusy = true;
+
+            try
+            {
+                Milestones.Clear();
+                var milestones = await _dataStore.GetItemsAsync(true);
+                foreach (var milestone in milestones)
+                {
+                    Milestones.Add(milestone);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
     }
 }
