@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using Autofac;
 using Xamarin.Forms;
-using ProductivityApp.ViewModels;
 
 namespace ProductivityApp
 {
@@ -24,7 +23,7 @@ namespace ProductivityApp
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<MilestoneDataStore>().As<IDataStore<Milestone>>();
+            builder.RegisterType<MilestoneDataStore>().As<IDataStore<Milestone>>().SingleInstance();
 
             container = builder.Build();
         }

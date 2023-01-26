@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading;
 using Xamarin.UITest.Queries;
 using Query = System.Func<Xamarin.UITest.Queries.AppQuery, Xamarin.UITest.Queries.AppQuery>;
 
@@ -8,18 +6,23 @@ namespace ProductivityAppTests.UiTests.Pages
 {
     public class MilestonesPageHelper : BasePageHelper
     {
-        readonly string addButton;
-        readonly Query title;
-        readonly Query description;
-        readonly Query deadline;
+        private readonly string addButton;
+        private readonly Query milestoneElements;
+        private readonly int milestoneEnumCount;
+        public enum ClassIndex 
+            {
+                title = 0,
+                description = 1,
+                deadline = 2
+            };
 
         public MilestonesPageHelper()
         {
             addButton = "Add";
-            title = c => c.Marked("Title");
-            description = c => c.Marked("Description");
-            deadline = c => c.Marked("Deadline");
+            milestoneElements = c => c.ClassFull("LabelAppCompatRenderer");
+            milestoneEnumCount = ClassIndex.GetNames(typeof(ClassIndex)).Length;
         }
+
         protected override PlatformQuery Trait => new PlatformQuery
         {
             Android = c => c.Marked("Milestones"),
@@ -31,12 +34,15 @@ namespace ProductivityAppTests.UiTests.Pages
             SelectElement(addButton, timeout);
         }
 
-        public AppResult[] GetMilestone(int index, TimeSpan? timeout = default)
+        public AppResult[] GetMilestone(int milestoneNum, TimeSpan? timeout = default)
         {
-            var milestone = new AppResult[3];
-            milestone[0] = GetElements(title)[index];
-            milestone[1] = GetElements(description)[index];
-            milestone[2] = GetElements(deadline)[index];
+            var allMilestones = GetElements(milestoneElements, timeout);
+            var indexMod = (milestoneNum * milestoneEnumCount);
+
+            var milestone = new AppResult[milestoneEnumCount];
+            milestone[(int)ClassIndex.title] = allMilestones[(int)ClassIndex.title + indexMod];
+            milestone[(int)ClassIndex.description] = allMilestones[(int)ClassIndex.description + indexMod];
+            milestone[(int)ClassIndex.deadline] = allMilestones[(int)ClassIndex.deadline + indexMod];
 
             return milestone;
         }

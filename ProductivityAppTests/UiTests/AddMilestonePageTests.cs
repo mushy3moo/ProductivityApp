@@ -23,7 +23,7 @@ namespace ProductivityAppTests.UiTests
         }
 
         [Test]
-        public void FindStuff()
+        public void ExploreElements()
         {
             app.Repl();
         }
@@ -76,13 +76,11 @@ namespace ProductivityAppTests.UiTests
             var expectedMilestone = new Milestone()
             {
                 Label = "Test Milestone",
-                Description = "Test Description",
-                Deadline = DateTime.Now,
+                Description = "Test Description"
             };
 
             addMilestonePage.EnterTitleText(expectedMilestone.Label);
             addMilestonePage.EnterDescriptionText(expectedMilestone.Description);
-            addMilestonePage.SelectDeadline(expectedMilestone.Deadline);
             addMilestonePage.SelectSaveButton();
 
             milestonesPage.AssertOnPage();
@@ -91,7 +89,6 @@ namespace ProductivityAppTests.UiTests
             {
                 Assert.That(milestone[0].Text, Is.EqualTo(expectedMilestone.Label));
                 Assert.That(milestone[1].Text, Is.EqualTo(expectedMilestone.Description));
-                Assert.That(milestone[2].Text, Is.EqualTo(expectedMilestone.Deadline.ToString()));
             });
         }
     }

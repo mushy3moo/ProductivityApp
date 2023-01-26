@@ -21,15 +21,18 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout Padding="10" x:DataType="model:Milestone">
-                        <Label Text="{Binding Label}" 
+                        <Label 
+                            Text="{Binding Label}" 
                             LineBreakMode="NoWrap" 
                             Style="{DynamicResource ListItemTextStyle}" 
                             FontSize="16" />
-                        <Label Text="{Binding Description}" 
+                        <Label 
+                            Text="{Binding Description}" 
                             LineBreakMode="NoWrap"
                             Style="{DynamicResource ListItemDetailTextStyle}"
                             FontSize="13" />
-                        <Label Text="{Binding Deadline}"
+                        <Label 
+                            Text="{Binding Deadline}"
                             LineBreakMode="NoWrap"
                             Style="{DynamicResource ListItemDeadlineTextStyle}"
                             FontSize="13" />
