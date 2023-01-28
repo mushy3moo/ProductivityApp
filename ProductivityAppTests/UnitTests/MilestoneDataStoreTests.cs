@@ -5,6 +5,8 @@ using ProductivityApp.Models;
 using ProductivityApp.Services;
 using System.Linq;
 using System.Threading.Tasks;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace ProductivityAppTests.UnitTests
 {
@@ -101,6 +103,7 @@ namespace ProductivityAppTests.UnitTests
         [Test]
         public async Task DeleteItemAsync_RemovesMilestoneFromDataStore()
         {
+            var milestonesDataStore = new MilestoneDataStore();
             var id = "2";
             var milestoneList = new List<Milestone>
                 {
@@ -108,7 +111,6 @@ namespace ProductivityAppTests.UnitTests
                     new Milestone { Id = id, Label = "Milestone 2" },
                     new Milestone { Id = "3", Label = "Milestone 3" }
                 };
-            var milestonesDataStore = new MilestoneDataStore();
             await milestonesDataStore.AddItemsAsync(milestoneList);
 
             var deleteResult = await milestonesDataStore.DeleteItemAsync(id);
@@ -120,6 +122,65 @@ namespace ProductivityAppTests.UnitTests
                 Assert.That(getItemResult, Is.Null);
                 Assert.That(milestonesDataStore.milestones, Is.Not.EqualTo(milestoneList));
             });
+        }
+
+        [Test]
+        public async Task SaveItemsLocalCreatesJson()
+        {
+            var pathUWP = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ProductivityApp");
+            var expectedPath = Path.Combine(pathUWP, "data", "milestones.json");
+            var dataStore = new MilestoneDataStore(pathUWP);
+            var milestone = new Milestone
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Label = "Test Label",
+                    Description = "Test Description",
+                    Deadline = DateTime.UtcNow
+                };
+
+            await dataStore.AddItemAsync(milestone);
+            dataStore.SaveItemsLocal();
+
+            var result = File.Exists(expectedPath);
+            Assert.That(result, Is.True);
+            File.Delete(expectedPath);
+        }
+
+        [TestCase("")]
+        [TestCase("C:\\Users\\Marcellino\\AppData\\Local\\ProductivityApp\\data\\milestones.json")]
+        public async Task LoadItemsLocalPassesEmptyListIfNoFileFound(string path)
+        {
+            var dataStore = new MilestoneDataStore(path);
+
+            var milestones = await dataStore.GetItemsAsync();
+            Assert.That(milestones, Is.Empty);
+        }
+
+
+        [Test]
+        public async Task LoadItemsLocalLoadsJsonCorrectly()
+        {
+            var pathUWP = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ProductivityApp");
+            var fullPath = Path.Combine(pathUWP, "data", "milestones.json");
+            var expectedMilestone = new Milestone
+            {
+                Id = Guid.NewGuid().ToString(),
+                Label = "Test Label",
+                Description = "Test Description",
+                Deadline = DateTime.UtcNow
+            };
+            var milestonesList = new List<Milestone> {
+                expectedMilestone
+            };
+
+            var json = JsonConvert.SerializeObject(milestonesList);
+            File.WriteAllText(fullPath, json);
+            var dataStore = new MilestoneDataStore(pathUWP);
+
+            var resultList = await dataStore.GetItemsAsync();
+            var result = resultList.FirstOrDefault();
+            Assert.That(result.Id, Is.EqualTo(expectedMilestone.Id));    
+            File.Delete(fullPath);
         }
     }
 }

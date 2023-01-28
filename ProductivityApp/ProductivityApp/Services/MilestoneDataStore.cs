@@ -1,20 +1,31 @@
-﻿using ProductivityApp.Models;
+﻿using Newtonsoft.Json;
+using ProductivityApp.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration;
 
 namespace ProductivityApp.Services
 {
     public class MilestoneDataStore : IDataStore<Milestone>
     {
         public readonly List<Milestone> milestones;
+        private readonly string _localDataPath;
 
         public MilestoneDataStore()
         {
             milestones = new List<Milestone>();
         }
 
+        public MilestoneDataStore(string localDataPath)
+        {
+            _localDataPath = localDataPath;
+            milestones = LoadItemsLocal();
+        }
+        
         public async Task<bool> AddItemAsync(Milestone item)
         {
             milestones.Add(item);
@@ -54,6 +65,30 @@ namespace ProductivityApp.Services
         public async Task<IEnumerable<Milestone>> GetItemsAsync(bool forceRefresh = false)
         {
             return await Task.FromResult(milestones);
+        }
+
+        public void SaveItemsLocal()
+        {
+            var json = JsonConvert.SerializeObject(milestones);
+            var fullPath = Path.Combine(_localDataPath, "data", "milestones.json");
+
+            File.WriteAllText(fullPath, json);
+        }
+
+        private List<Milestone> LoadItemsLocal()
+        {
+            var localMilestones = new List<Milestone>();
+
+            try
+            {
+                var fullPath = Path.Combine(_localDataPath, "data", "milestones.json");
+                var json = File.ReadAllText(fullPath);
+                localMilestones = JsonConvert.DeserializeObject<List<Milestone>>(json); ;
+            } catch (Exception ex)
+            {
+                //Add to app log
+            }
+            return localMilestones;
         }
     }
 }

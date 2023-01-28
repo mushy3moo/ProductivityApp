@@ -23,12 +23,6 @@ namespace ProductivityAppTests.UiTests
         }
 
         [Test]
-        public void ExploreElements()
-        {
-            app.Repl();
-        }
-
-        [Test]
         public void CancelButtonNavigatsToMilestone()
         {
             addMilestonePage.SelectCancelButton();

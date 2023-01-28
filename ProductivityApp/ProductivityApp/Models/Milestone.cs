@@ -1,19 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using Newtonsoft.Json;
 
 namespace ProductivityApp.Models
 {
     public class Milestone
     {
+        [JsonProperty("id")]
         public string Id { get; set; }
+
+        [JsonProperty("label")]
         public string Label { get; set; }
+
+        [JsonProperty("description")]
         public string Description { get; set; }
+
+        [JsonProperty("deadline")]
         public DateTime Deadline { get; set; }
+
+        [JsonProperty("icon")]
         public string Icon { get; set; }
+
+        [JsonProperty("isComplete")]
         public bool IsCompleted { get; set; }
+
+        [JsonProperty("parentMilestone")]
         public Milestone ParentMilestone { get; set; }
-        public Milestone ChildMilestone { get; set; }
-        public List<Objective> AttachedTasks { get; set; }
+
+        [JsonProperty("childMilestones")]
+        public List<Milestone> ChildMilestones { get; set; }
+
+        [JsonProperty("childObjectives")]
+        public List<Objective> ChildObjectives { get; set; }
     }
 }
