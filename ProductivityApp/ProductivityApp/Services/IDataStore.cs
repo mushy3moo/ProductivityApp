@@ -12,5 +12,7 @@ namespace ProductivityApp.Services
         Task<bool> DeleteItemAsync(string id);
         Task<T> GetItemAsync(string id);
         Task<IEnumerable<T>> GetItemsAsync(bool forceRefresh = false);
+        void SaveItemsLocal();
+        List<Milestone> LoadItemsLocal();
     }
 }

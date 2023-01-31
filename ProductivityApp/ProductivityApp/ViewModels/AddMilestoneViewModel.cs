@@ -1,9 +1,6 @@
-﻿using Autofac;
-using Autofac.Core;
-using ProductivityApp.Models;
+﻿using ProductivityApp.Models;
 using ProductivityApp.Services;
 using System;
-using System.ComponentModel;
 using Xamarin.Forms;
 
 namespace ProductivityApp.ViewModels
@@ -67,6 +64,7 @@ namespace ProductivityApp.ViewModels
             };
 
             await _dataStore.AddItemAsync(newMilestone);
+            _dataStore.SaveItemsLocal();
 
             // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync("..");

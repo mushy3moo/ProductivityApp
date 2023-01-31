@@ -1,5 +1,6 @@
 ﻿using System;
 using Xamarin.UITest;
+using Xamarin.UITest.Configuration;
 
 namespace ProductivityAppTests.UiTests
 {
@@ -40,7 +41,7 @@ namespace ProductivityAppTests.UiTests
                 app = ConfigureApp.Android
                     .InstalledApp("com.companyname.productivityapp")
                     .EnableLocalScreenshots()
-                    .StartApp();
+                    .StartApp(AppDataMode.Clear);
             }
             else app = ConfigureApp.iOS.StartApp();
         }

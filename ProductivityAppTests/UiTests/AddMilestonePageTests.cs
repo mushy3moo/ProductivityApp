@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using ProductivityAppTests.UiTests.Pages;
 using System;
+using System.IO;
 using Xamarin.UITest;
 using ProductivityApp.Models;
 

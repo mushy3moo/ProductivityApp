@@ -70,18 +70,18 @@ namespace ProductivityApp.Services
         public void SaveItemsLocal()
         {
             var json = JsonConvert.SerializeObject(milestones);
-            var fullPath = Path.Combine(_localDataPath, "data", "milestones.json");
+            var fullPath = Path.Combine(_localDataPath, "milestones.json");
 
             File.WriteAllText(fullPath, json);
         }
 
-        private List<Milestone> LoadItemsLocal()
+        public List<Milestone> LoadItemsLocal()
         {
             var localMilestones = new List<Milestone>();
 
             try
             {
-                var fullPath = Path.Combine(_localDataPath, "data", "milestones.json");
+                var fullPath = Path.Combine(_localDataPath, "milestones.json");
                 var json = File.ReadAllText(fullPath);
                 localMilestones = JsonConvert.DeserializeObject<List<Milestone>>(json); ;
             } catch (Exception ex)

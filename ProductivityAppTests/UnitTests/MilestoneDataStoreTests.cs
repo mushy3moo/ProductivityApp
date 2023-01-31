@@ -147,18 +147,18 @@ namespace ProductivityAppTests.UnitTests
         }
 
         [TestCase("")]
-        [TestCase("C:\\Users\\Marcellino\\AppData\\Local\\ProductivityApp\\data\\milestones.json")]
-        public async Task LoadItemsLocalPassesEmptyListIfNoFileFound(string path)
+        [TestCase("C:\\Users\\Marcellino\\AppData\\Local\\ProductivityApp\\data\\incorrect.json")]
+        public void LoadItemsLocalPassesEmptyListIfNoFileFound(string path)
         {
             var dataStore = new MilestoneDataStore(path);
 
-            var milestones = await dataStore.GetItemsAsync();
+            var milestones = dataStore.LoadItemsLocal();
             Assert.That(milestones, Is.Empty);
         }
 
 
         [Test]
-        public async Task LoadItemsLocalLoadsJsonCorrectly()
+        public void LoadItemsLocalLoadsJsonCorrectly()
         {
             var pathUWP = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ProductivityApp");
             var fullPath = Path.Combine(pathUWP, "data", "milestones.json");
@@ -177,7 +177,7 @@ namespace ProductivityAppTests.UnitTests
             File.WriteAllText(fullPath, json);
             var dataStore = new MilestoneDataStore(pathUWP);
 
-            var resultList = await dataStore.GetItemsAsync();
+            var resultList = dataStore.LoadItemsLocal();
             var result = resultList.FirstOrDefault();
             Assert.That(result.Id, Is.EqualTo(expectedMilestone.Id));    
             File.Delete(fullPath);
