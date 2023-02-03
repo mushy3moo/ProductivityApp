@@ -5,15 +5,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Xamarin.Forms;
-using Xamarin.Forms.PlatformConfiguration;
 
 namespace ProductivityApp.Services
 {
     public class MilestoneDataStore : IDataStore<Milestone>
     {
-        public readonly List<Milestone> milestones;
-        private readonly string _localDataPath;
+        private readonly List<Milestone> milestones;
+        private readonly string localDataPath;
 
         public MilestoneDataStore()
         {
@@ -22,7 +20,12 @@ namespace ProductivityApp.Services
 
         public MilestoneDataStore(string localDataPath)
         {
-            _localDataPath = localDataPath;
+            if(string.IsNullOrWhiteSpace(localDataPath))
+            {
+                throw new ArgumentNullException(nameof(localDataPath), "String argument cannot be null or white space");
+            }
+
+            this.localDataPath = localDataPath;
             milestones = LoadItemsLocal();
         }
         
@@ -69,8 +72,12 @@ namespace ProductivityApp.Services
 
         public void SaveItemsLocal()
         {
+            if(!Directory.Exists(localDataPath))
+            {
+                throw new DirectoryNotFoundException("The specified directory does not exist: " + localDataPath);
+            }
             var json = JsonConvert.SerializeObject(milestones);
-            var fullPath = Path.Combine(_localDataPath, "milestones.json");
+            var fullPath = Path.Combine(localDataPath, "milestones.json");
 
             File.WriteAllText(fullPath, json);
         }
@@ -79,15 +86,21 @@ namespace ProductivityApp.Services
         {
             var localMilestones = new List<Milestone>();
 
+            if (!Directory.Exists(localDataPath))
+            {
+                throw new DirectoryNotFoundException("The specified directory does not exist: " + localDataPath);
+            }
+
             try
             {
-                var fullPath = Path.Combine(_localDataPath, "milestones.json");
+                var fullPath = Path.Combine(localDataPath, "milestones.json");
                 var json = File.ReadAllText(fullPath);
-                localMilestones = JsonConvert.DeserializeObject<List<Milestone>>(json); ;
-            } catch (Exception ex)
+                localMilestones = JsonConvert.DeserializeObject<List<Milestone>>(json);
+            } catch(Exception ex)
             {
-                //Add to app log
+                Console.WriteLine(ex.ToString()); //Replace with App Logger
             }
+
             return localMilestones;
         }
     }

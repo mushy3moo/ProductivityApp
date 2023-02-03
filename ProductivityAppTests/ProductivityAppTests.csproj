@@ -128,6 +128,7 @@
     <Compile Include="UiTests\BaseTestFixture.cs" />
     <Compile Include="UiTests\Pages\AddMilestonePageHelper.cs" />
     <Compile Include="UiTests\Pages\BasePageHelper.cs" />
+    <Compile Include="UiTests\Pages\EditMilestonePageHelper.cs" />
     <Compile Include="UiTests\Pages\PlatformQuery.cs" />
     <Compile Include="UiTests\Pages\MilestonesPageHelper.cs" />
     <Compile Include="UiTests\AddMilestonePageTests.cs" />
@@ -135,8 +136,9 @@
     <Compile Include="UnitTests\MilestoneDataStoreTests.cs" />
     <Compile Include="UiTests\MilestonePageTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnitTests\MilestoneDetailPageTests.cs" />
+    <Compile Include="UnitTests\EditMilestonePageTests.cs" />
     <Compile Include="UnitTests\MilestonesPageTests.cs" />
+    <Compile Include="UnitTests\MilestoneTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

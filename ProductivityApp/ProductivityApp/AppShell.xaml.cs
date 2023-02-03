@@ -11,7 +11,7 @@ namespace ProductivityApp
         public AppShell()
         {
             InitializeComponent();
-            Routing.RegisterRoute(nameof(MilestoneDetailPage), typeof(MilestoneDetailPage));
+            Routing.RegisterRoute(nameof(EditMilestonePage), typeof(EditMilestonePage));
             Routing.RegisterRoute(nameof(AddMilestonePage), typeof(AddMilestonePage));
         }
 

@@ -4,7 +4,6 @@ using System;
 using Autofac;
 using Xamarin.Forms;
 using System.IO;
-using Xamarin.Forms.PlatformConfiguration;
 
 namespace ProductivityApp
 {
@@ -48,17 +47,19 @@ namespace ProductivityApp
 
         private void SetLocalFilePaths()
         {
-            if (Device.RuntimePlatform == Device.Android)
+            switch (Device.RuntimePlatform) 
             {
-                localDirectoryPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            }
-            else if (Device.RuntimePlatform == Device.iOS)
-            {
-                localDirectoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "..", "Library", "ApplicationSupport", "ProductivityApp");
-            }
-            else if (Device.RuntimePlatform == Device.UWP)
-            {
-                localDirectoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ProductivityApp");
+                case Device.Android:
+                    localDirectoryPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+                    break;
+
+                case Device.iOS:
+                    localDirectoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "..", "Library", "ApplicationSupport", "ProductivityApp");
+                    break;
+
+                case Device.UWP:
+                    localDirectoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ProductivityApp");
+                    break;
             }
             localDataPath = Path.Combine(localDirectoryPath, "data");
         }
@@ -74,7 +75,6 @@ namespace ProductivityApp
             {
                 Directory.CreateDirectory(localDataPath);
             }
-            
         }
     }
 }

@@ -8,7 +8,7 @@ using Xamarin.Forms;
 namespace ProductivityApp.ViewModels
 {
     [QueryProperty(nameof(MilestoneId), nameof(MilestoneId))]
-    public class MilestoneDetailViewModel : BaseViewModel
+    public class EditMilestoneViewModel : BaseViewModel
     {
         private string milestoneId;
         private string label;
@@ -17,7 +17,7 @@ namespace ProductivityApp.ViewModels
         public string Id { get; set; }
         private readonly IDataStore<Milestone> _dataStore;
 
-        public MilestoneDetailViewModel(IDataStore<Milestone> dataStore)
+        public EditMilestoneViewModel(IDataStore<Milestone> dataStore)
         {
             _dataStore = dataStore;
         }

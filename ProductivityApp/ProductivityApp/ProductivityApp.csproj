@@ -16,10 +16,13 @@
     <Compile Update="Views\AddMilestonePage.xaml.cs">
       <DependentUpon>AddMilestonePage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\EditMilestonePage.xaml.cs">
+      <DependentUpon>EditMilestonePage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Views\MilestoneDetailPage.xaml">
+    <EmbeddedResource Update="Views\EditMilestonePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\MilestonesPage.xaml">

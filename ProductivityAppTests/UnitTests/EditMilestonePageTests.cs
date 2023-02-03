@@ -8,7 +8,7 @@ using ProductivityApp.ViewModels;
 
 namespace ProductivityAppTests.UnitTests
 {
-    public class MilestoneDetailPageTests
+    public class EditMilestonePageTests
     {
         [Test]
         public async Task LoadMilestoneIdSetsVariablesCorrectly()
@@ -25,7 +25,7 @@ namespace ProductivityAppTests.UnitTests
                 };
                 await dataStore.AddItemAsync(expectedMilestone);
 
-                var viewModel = new MilestoneDetailViewModel(dataStore)
+                var viewModel = new EditMilestoneViewModel(dataStore)
                 {
                     MilestoneId = expectedMilestone.Id
                 };

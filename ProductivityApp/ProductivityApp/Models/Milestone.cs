@@ -15,6 +15,9 @@ namespace ProductivityApp.Models
         [JsonProperty("description")]
         public string Description { get; set; }
 
+        [JsonProperty("createdOn")]
+        public DateTime CreatedOn { get; }
+
         [JsonProperty("deadline")]
         public DateTime Deadline { get; set; }
 
@@ -32,5 +35,11 @@ namespace ProductivityApp.Models
 
         [JsonProperty("childObjectives")]
         public List<Objective> ChildObjectives { get; set; }
+
+        public Milestone()
+        {
+            CreatedOn = DateTime.Now;
+            IsCompleted = false;
+        }
     }
 }

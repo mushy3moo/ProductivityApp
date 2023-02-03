@@ -56,8 +56,8 @@ namespace ProductivityApp.ViewModels
             if (Milestone == null)
                 return;
 
-            // This will push the MilestoneDetailPage onto the navigation stack
-            await Shell.Current.GoToAsync($"{nameof(MilestoneDetailPage)}?{nameof(MilestoneDetailViewModel.MilestoneId)}={Milestone.Id}");
+            // This will push the EditMilestonePage onto the navigation stack
+            await Shell.Current.GoToAsync($"{nameof(EditMilestonePage)}?{nameof(EditMilestoneViewModel.MilestoneId)}={Milestone.Id}");
         }
 
         private async Task ExecuteLoadMilestonesCommand()

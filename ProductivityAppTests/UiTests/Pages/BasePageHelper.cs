@@ -17,13 +17,11 @@ namespace ProductivityAppTests.UiTests.Pages
 
         public void AssertOnPage(TimeSpan? timeout = default)
         {
+            timeout = timeout ?? TimeSpan.FromSeconds(10);
             var page = this.GetType().Name.Replace("Helper", "");
             var message = $"Unable to verify on page: {page}";
 
-            if (timeout == null)
-                Assert.IsNotEmpty(app.Query(Trait.Current), message);
-            else
-                Assert.DoesNotThrow(() => app.WaitForElement(Trait.Current, timeout: timeout), message);
+            Assert.DoesNotThrow(() => app.WaitForElement(Trait.Current, timeout: timeout), message);
         }
 
         public void WaitForPageToLeave(TimeSpan? timeout = default)
@@ -33,6 +31,11 @@ namespace ProductivityAppTests.UiTests.Pages
             var message = $"Unable to verify *not* on page: {page}";
 
             Assert.DoesNotThrow(() => app.WaitForNoElement(Trait.Current, timeout: timeout), message);
+        }
+
+        public void RefreshPage()
+        {
+            app.Invoke("Reload");
         }
 
         public void NavigateMenu(string element, TimeSpan? timeout = default)
