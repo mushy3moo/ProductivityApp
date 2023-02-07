@@ -49,8 +49,8 @@ namespace ProductivityApp.ViewModels
 
         private bool ValidateSave()
         {
-            return !String.IsNullOrWhiteSpace(label)
-                && !String.IsNullOrWhiteSpace(description);
+            return !string.IsNullOrWhiteSpace(label)
+                && !string.IsNullOrWhiteSpace(description);
         }
 
         private async void OnSave()

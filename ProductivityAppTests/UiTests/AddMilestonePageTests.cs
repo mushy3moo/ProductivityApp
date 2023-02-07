@@ -1,7 +1,5 @@
-﻿using NUnit.Framework;
-using ProductivityAppTests.UiTests.Pages;
-using System;
-using System.IO;
+﻿using System;
+using NUnit.Framework;
 using Xamarin.UITest;
 using ProductivityApp.Models;
 
@@ -9,17 +7,16 @@ namespace ProductivityAppTests.UiTests
 {
     public class AddMilestonePageTests : BaseTestFixture
     {
-        MilestonesPageHelper milestonesPage;
-        AddMilestonePageHelper addMilestonePage;
         public AddMilestonePageTests(Platform platform) : base(platform) { }
 
         [SetUp]
         public virtual void BeforeEachTest()
         {
-            milestonesPage = new MilestonesPageHelper();
-            addMilestonePage = new AddMilestonePageHelper();
+            AppManager.StartApp();
+
             milestonesPage.NavigateMenu("Milestones");
             milestonesPage.SelectAddButton();
+
             addMilestonePage.AssertOnPage();
         }
 
@@ -43,26 +40,26 @@ namespace ProductivityAppTests.UiTests
         public void SaveButtonIsUnavailableWhenFormIsPartiallyFilledWithTitle()
         {
             var expectedText = "Test Milestone";
+
             addMilestonePage.EnterTitleText(expectedText);
-            
             addMilestonePage.SelectSaveButton();
 
-            var resultText = addMilestonePage.GetText(expectedText).Text;
             addMilestonePage.AssertOnPage();
-            Assert.That(expectedText, Is.EqualTo(resultText));
+            var actualText = addMilestonePage.GetText(expectedText);
+            Assert.That(actualText, Is.EqualTo(expectedText));
         }
 
         [Test]
         public void SaveButtonIsUnavailableWhenFormIsPartiallyFilledWithDescription()
         {
             var expectedText = "Test Description";
-            addMilestonePage.EnterDescriptionText(expectedText);
 
+            addMilestonePage.EnterDescriptionText(expectedText);
             addMilestonePage.SelectSaveButton();
 
-            var resultText = addMilestonePage.GetText(expectedText).Text;
             addMilestonePage.AssertOnPage();
-            Assert.That(expectedText, Is.EqualTo(resultText));
+            var actualText = addMilestonePage.GetText(expectedText);
+            Assert.That(actualText, Is.EqualTo(expectedText));
         }
 
         [Test]
@@ -82,8 +79,8 @@ namespace ProductivityAppTests.UiTests
             var milestone = milestonesPage.GetMilestone(0);
             Assert.Multiple(() =>
             {
-                Assert.That(milestone[0].Text, Is.EqualTo(expectedMilestone.Label));
-                Assert.That(milestone[1].Text, Is.EqualTo(expectedMilestone.Description));
+                Assert.That(milestone.Label, Is.EqualTo(expectedMilestone.Label));
+                Assert.That(milestone.Description, Is.EqualTo(expectedMilestone.Description));
             });
         }
     }

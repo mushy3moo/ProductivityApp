@@ -10,16 +10,16 @@ namespace ProductivityAppTests.UiTests.Pages
         readonly Query titleTextbox;
         readonly Query descriptionTextbox;
         readonly Query deadlineTextbox;
-        readonly Query cancelButton;
         readonly Query saveButton;
+        readonly Query cancelButton;
 
         public AddMilestonePageHelper() 
         {
-            titleTextbox = c => c.ClassFull("FormsAppCompatEditText").Index(0);
-            descriptionTextbox = c => c.ClassFull("FormsAppCompatEditText").Index(1);
+            titleTextbox = c => c.ClassFull("FormsAppCompatEditText").Index((int)ClassIndex.label);
+            descriptionTextbox = c => c.ClassFull("FormsAppCompatEditText").Index((int)ClassIndex.description);
             deadlineTextbox = c => c.Class("PickerEditText");
-            cancelButton = c => c.Marked("Cancel");
             saveButton = c => c.Marked("Save");
+            cancelButton = c => c.Marked("Cancel");
         }
         protected override PlatformQuery Trait => new PlatformQuery
         {
@@ -56,9 +56,9 @@ namespace ProductivityAppTests.UiTests.Pages
             SelectElement(saveButton, timeout);
         }
 
-        public AppResult GetText(string element, TimeSpan? timeout = default)
+        public string GetText(string element, TimeSpan? timeout = default)
         {
-            return GetElementFromQuery(element, 0, timeout);
+            return GetElementFromQuery(element, 0, timeout).Text;
         }
     }
 }

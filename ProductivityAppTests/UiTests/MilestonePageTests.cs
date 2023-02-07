@@ -1,53 +1,42 @@
 ﻿using System;
 using NUnit.Framework;
 using Xamarin.UITest;
-using ProductivityAppTests.UiTests.Pages;
 using ProductivityApp.Models;
 
 namespace ProductivityAppTests.UiTests
 {
     public class MilestonePageTests : BaseTestFixture
     {
-        private MilestonesPageHelper milestonesPage;
-        private AddMilestonePageHelper addMilestonePage;
-        private EditMilestonePageHelper editMilestonePage;
-        private readonly Platform platform;
-
-        public MilestonePageTests(Platform platform) : base(platform) 
-        {
-            this.platform = platform;
-        }
+        public MilestonePageTests(Platform platform) : base(platform) { }
 
         [SetUp]
         public virtual void BeforeEachTest()
         {
-            milestonesPage = new MilestonesPageHelper();
-            addMilestonePage = new AddMilestonePageHelper();
-            editMilestonePage = new EditMilestonePageHelper();
+            AppManager.StartApp();
+
             milestonesPage.NavigateMenu("Milestones");
         }
 
         [Test]
-        public void MenuLoadsMilestonePage()
+        public void NavigationMenuLoadsMilestonePage()
         {
             milestonesPage.AssertOnPage();
         }
 
         [Test]
-        public void MilestonePageCanDisplayMilestone()
+        public void TappingMilestoneLoadsEditMilestonePage()
         {
-            var milestone = new Milestone 
-            {
-                Id = Guid.NewGuid().ToString(),
-                Label = "Label",
-                Description = "Description",
-                Deadline= DateTime.Now
-            };
+            milestonesPage.SelectAddButton();
 
-            milestonesPage.CreateMilestone(milestone, platform);
-            milestonesPage.RefreshPage();
+            addMilestonePage.AssertOnPage();
+            addMilestonePage.EnterTitleText("Test Milestone");
+            addMilestonePage.EnterDescriptionText("Description of Milestone");
+            addMilestonePage.SelectSaveButton();
 
-            milestonesPage.GetMilestone(0);
+            milestonesPage.AssertOnPage();
+            milestonesPage.SelectMilestone(0);
+
+            editMilestonePage.AssertOnPage();
         }
 
         [Test]
@@ -56,12 +45,6 @@ namespace ProductivityAppTests.UiTests
             milestonesPage.SelectAddButton();
 
             addMilestonePage.AssertOnPage();
-        }
-
-        [Test]
-        public void TappingMilestoneLoadsEditMilestonePage()
-        {
-            //milestonesPage.SelectMilestone();
         }
     }
 }

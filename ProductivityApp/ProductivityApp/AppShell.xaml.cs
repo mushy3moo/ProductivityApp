@@ -1,5 +1,4 @@
-﻿using ProductivityApp.ViewModels;
-using ProductivityApp.Views;
+﻿using ProductivityApp.Views;
 using System;
 using System.Collections.Generic;
 using Xamarin.Forms;

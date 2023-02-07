@@ -126,6 +126,7 @@
   <ItemGroup>
     <Compile Include="UiTests\AppManager.cs" />
     <Compile Include="UiTests\BaseTestFixture.cs" />
+    <Compile Include="UiTests\EditMIlestonePageTests.cs" />
     <Compile Include="UiTests\Pages\AddMilestonePageHelper.cs" />
     <Compile Include="UiTests\Pages\BasePageHelper.cs" />
     <Compile Include="UiTests\Pages\EditMilestonePageHelper.cs" />

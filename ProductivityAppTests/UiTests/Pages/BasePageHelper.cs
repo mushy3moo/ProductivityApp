@@ -12,12 +12,19 @@ namespace ProductivityAppTests.UiTests.Pages
         protected IApp app => AppManager.App;
         protected bool OnAndroid => AppManager.Platform == Platform.Android;
         protected bool OniOS => AppManager.Platform == Platform.iOS;
-
         protected abstract PlatformQuery Trait { get; }
+        protected TimeSpan defaultTimeout = TimeSpan.FromSeconds(10);
+
+        public enum ClassIndex
+        {
+            label = 0,
+            description = 1,
+            deadline = 2
+        }
 
         public void AssertOnPage(TimeSpan? timeout = default)
         {
-            timeout = timeout ?? TimeSpan.FromSeconds(10);
+            timeout = timeout ?? defaultTimeout;
             var page = this.GetType().Name.Replace("Helper", "");
             var message = $"Unable to verify on page: {page}";
 
@@ -26,7 +33,7 @@ namespace ProductivityAppTests.UiTests.Pages
 
         public void WaitForPageToLeave(TimeSpan? timeout = default)
         {
-            timeout = timeout ?? TimeSpan.FromSeconds(10);
+            timeout = timeout ?? defaultTimeout;
             var page = this.GetType().Name.Replace("Helper", "");
             var message = $"Unable to verify *not* on page: {page}";
 
@@ -47,7 +54,7 @@ namespace ProductivityAppTests.UiTests.Pages
 
         protected void SelectElement(Query element, TimeSpan? timeout = default)
         {
-            timeout = timeout ?? TimeSpan.FromSeconds(10);
+            timeout = timeout ?? defaultTimeout;
             var page = this.GetType().Name.Replace("Helper", "");
             var message = $"Timeout Value {timeout.Value} on page: {page}";
 
@@ -57,7 +64,7 @@ namespace ProductivityAppTests.UiTests.Pages
 
         protected void SelectElement(string element, TimeSpan? timeout = default)
         {
-            timeout = timeout ?? TimeSpan.FromSeconds(10);
+            timeout = timeout ?? defaultTimeout;
             var page = this.GetType().Name.Replace("Helper", "");
             var message = $"Timeout Value {timeout.Value} on page: {page}";
 
@@ -67,8 +74,8 @@ namespace ProductivityAppTests.UiTests.Pages
 
         public AppResult GetElementFromQuery(Query element, int? index = default, TimeSpan? timeout = default)
         {
+            timeout = timeout ?? defaultTimeout;
             var i = index ?? 0;
-            timeout = timeout ?? TimeSpan.FromSeconds(10);
             var page = this.GetType().Name.Replace("Helper", "");
             var message = $"Timeout Value {timeout.Value} on page: {page}";
 
@@ -78,8 +85,8 @@ namespace ProductivityAppTests.UiTests.Pages
 
         public AppResult GetElementFromQuery(string element, int? index = default, TimeSpan? timeout = default)
         {
+            timeout = timeout ?? defaultTimeout;
             var i = index ?? 0;
-            timeout = timeout ?? TimeSpan.FromSeconds(10);
             var page = this.GetType().Name.Replace("Helper", "");
             var message = $"Timeout Value {timeout.Value} on page: {page}";
 
@@ -89,7 +96,7 @@ namespace ProductivityAppTests.UiTests.Pages
 
         public AppResult[] GetElements(Query element, TimeSpan? timeout = default)
         {
-            timeout = timeout ?? TimeSpan.FromSeconds(10);
+            timeout = timeout ?? defaultTimeout;
             var page = this.GetType().Name.Replace("Helper", "");
             var message = $"Timeout Value {timeout.Value} on page: {page}";
 

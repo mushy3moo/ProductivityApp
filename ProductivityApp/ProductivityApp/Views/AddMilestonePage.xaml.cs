@@ -10,7 +10,6 @@ namespace ProductivityApp.Views
 {
 	public partial class AddMilestonePage : ContentPage
 	{
-		public Milestone Milestone { get; set; }
         private readonly IDataStore<Milestone> _dataStore;
         public AddMilestonePage()
 		{

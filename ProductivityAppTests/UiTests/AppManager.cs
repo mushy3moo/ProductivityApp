@@ -34,14 +34,16 @@ namespace ProductivityAppTests.UiTests
             }
         }
 
-        public static void StartApp()
+        public static void StartApp(AppDataMode? dataMode = default)
         {
+            var mode = dataMode ?? AppDataMode.Clear;
+
             if (platform == Platform.Android)
             {
                 app = ConfigureApp.Android
                     .InstalledApp("com.companyname.productivityapp")
                     .EnableLocalScreenshots()
-                    .StartApp(AppDataMode.Clear);
+                    .StartApp(mode);
             }
             else app = ConfigureApp.iOS.StartApp();
         }

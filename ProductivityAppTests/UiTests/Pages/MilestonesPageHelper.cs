@@ -1,31 +1,19 @@
-﻿using Newtonsoft.Json;
-using ProductivityApp.Models;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using Xamarin.Forms;
-using Xamarin.UITest;
-using Xamarin.UITest.Queries;
+﻿using System;
 using Query = System.Func<Xamarin.UITest.Queries.AppQuery, Xamarin.UITest.Queries.AppQuery>;
+using ProductivityApp.Models;
 
 namespace ProductivityAppTests.UiTests.Pages
 {
     public class MilestonesPageHelper : BasePageHelper
     {
         private readonly string addButton;
-        private readonly Query title;
+        private readonly Query pageTitle;
         private readonly Query milestoneElements;
         private readonly int milestoneEnumCount;
-        public enum ClassIndex 
-            {
-                title = 0,
-                description = 1,
-                deadline = 2
-            };
 
         public MilestonesPageHelper()
         {
-            title = c => c.Marked("Milestones");
+            pageTitle = c => c.Marked("Milestones");
             addButton = "Add";
             milestoneElements = c => c.ClassFull("LabelAppCompatRenderer");
             milestoneEnumCount = ClassIndex.GetNames(typeof(ClassIndex)).Length;
@@ -33,61 +21,37 @@ namespace ProductivityAppTests.UiTests.Pages
 
         protected override PlatformQuery Trait => new PlatformQuery
         {
-            Android = title,
-            iOS = title
+            Android = pageTitle,
+            iOS = pageTitle
         };
 
         public void SelectAddButton(TimeSpan? timeout = default)
         { 
             SelectElement(addButton, timeout);
         }
+        
+        public void SelectMilestone(int index, TimeSpan? timeout = default)
+        {
+            SelectElement(c => c.ClassFull("LabelAppCompatRenderer").Index(index), timeout);
+        }
 
-        public AppResult[] GetMilestone(int milestoneNum, TimeSpan? timeout = default)
+        public Milestone GetMilestone(int index, TimeSpan? timeout = default)
         {
             var allMilestones = GetElements(milestoneElements, timeout);
-            var indexMod = (milestoneNum * milestoneEnumCount);
+            var indexMod = (index * milestoneEnumCount);
 
-            var milestone = new AppResult[milestoneEnumCount];
-            milestone[(int)ClassIndex.title] = allMilestones[(int)ClassIndex.title + indexMod];
-            milestone[(int)ClassIndex.description] = allMilestones[(int)ClassIndex.description + indexMod];
-            milestone[(int)ClassIndex.deadline] = allMilestones[(int)ClassIndex.deadline + indexMod];
+            var label = allMilestones[(int)ClassIndex.label + indexMod].Text;
+            var description = allMilestones[(int)ClassIndex.description + indexMod].Text;
+            var deadline = allMilestones[(int)ClassIndex.deadline + indexMod].Text;
+
+            var milestone = new Milestone()
+            {
+                Label = label,
+                Description = description,
+                Deadline = DateTime.Parse(deadline)
+            };
 
             return milestone;
-        }
-
-        public void CreateMilestone(Milestone milestone, Platform platform)
-        {
-            var platformPath = "";
-
-            if (platform == Platform.Android)
-            {
-                platformPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            }
-            if (platform == Platform.iOS)
-            {
-                platformPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "..", "Library", "ApplicationSupport", "ProductivityApp");
-            }
-            var localDataPath = Path.Combine(platformPath, "data", "milestones.json");
-
-            var json = JsonConvert.SerializeObject(new List<Milestone> { milestone });
-            File.WriteAllText(localDataPath, json);
-        }
-
-        public void CreateMilestone(List<Milestone> milestones, int platform)
-        {
-            string platformPath;
-            if (platform == (int)Platform.Android)
-            {
-                platformPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            }
-            else
-            {
-                platformPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "..", "Library", "ApplicationSupport", "ProductivityApp");
-            }
-            string localDataPath = Path.Combine(platformPath, "data", "milestones.json");
-
-            var json = JsonConvert.SerializeObject(milestones);
-            File.WriteAllText(localDataPath, json);
         }
     }
 }
