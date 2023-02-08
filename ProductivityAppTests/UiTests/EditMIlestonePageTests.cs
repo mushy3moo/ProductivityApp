@@ -175,7 +175,7 @@ namespace ProductivityAppTests.UiTests
             editMilestonePage.SelectYesButton();
 
             milestonesPage.AssertOnPage();
-            milestonesPage.GetMilestone(0);
+            Assert.Throws<Exception>(() => milestonesPage.GetMilestone(0));
         }
     }
 }
