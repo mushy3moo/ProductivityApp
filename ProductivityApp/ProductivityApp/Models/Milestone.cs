@@ -27,6 +27,9 @@ namespace ProductivityApp.Models
         [JsonProperty("isComplete")]
         public bool IsCompleted { get; set; }
 
+        [JsonProperty("attachments")]
+        public List<Attachment> Attachments { get; set; }
+
         [JsonProperty("parentMilestone")]
         public Milestone ParentMilestone { get; set; }
 

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ProductivityApp.Services
 {
-    public interface IDataStore<T>
+    public interface IService<T>
     {
         Task<bool> AddItemAsync(T item);
         Task<bool> UpdateItemAsync(T item);
@@ -13,6 +13,6 @@ namespace ProductivityApp.Services
         Task<T> GetItemAsync(string id);
         Task<IEnumerable<T>> GetItemsAsync(bool forceRefresh = false);
         void SaveItemsLocal();
-        List<Milestone> LoadItemsLocal();
+        List<T> LoadItemsLocal();
     }
 }

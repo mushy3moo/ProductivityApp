@@ -8,13 +8,13 @@ namespace ProductivityApp.Views
 {
 	public partial class EditMilestonePage : ContentPage
 	{
-        private readonly IDataStore<Milestone> _dataStore;
+        private readonly IService<Milestone> _dataStore;
         public EditMilestonePage()
 		{
 			InitializeComponent();
             using (var scope = App.container.BeginLifetimeScope())
             {
-                _dataStore = scope.Resolve<IDataStore<Milestone>>();
+                _dataStore = scope.Resolve<IService<Milestone>>();
             }
             BindingContext = new EditMilestoneViewModel(_dataStore);
 

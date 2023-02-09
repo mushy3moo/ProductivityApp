@@ -39,7 +39,7 @@ namespace ProductivityApp
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<MilestoneDataStore>().As<IDataStore<Milestone>>().SingleInstance();
+            builder.RegisterType<MilestoneService>().As<IService<Milestone>>().SingleInstance();
             builder.RegisterInstance(localDataPath).As<string>();
 
             container = builder.Build();

@@ -14,12 +14,12 @@ namespace ProductivityApp.ViewModels
         private string label;
         private string description;
         private DateTime deadline;
-        private readonly IDataStore<Milestone> _dataStore;
+        private readonly IService<Milestone> _dataStore;
         public string Id { get; set; }
         public Command SaveCommand { get; }
         public Command DeleteCommand { get; }
 
-        public EditMilestoneViewModel(IDataStore<Milestone> dataStore)
+        public EditMilestoneViewModel(IService<Milestone> dataStore)
         {
             _dataStore = dataStore;
             SaveCommand = new Command(OnSave, ValidateSave);

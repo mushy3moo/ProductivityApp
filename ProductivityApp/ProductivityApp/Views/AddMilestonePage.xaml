@@ -17,6 +17,11 @@
             <Editor Text="{Binding Description, Mode=TwoWay}" AutoSize="TextChanges" FontSize="Medium" />
             <Label Text="Deadline:" FontSize="Large" FontAttributes="Bold" />
             <DatePicker Date="{Binding Deadline, Mode=TwoWay}" FontSize="Medium" />
+            <Label Text="Attachment:" FontSize="Large" FontAttributes="Bold" />
+            <Button Text="Add Attachment" HorizontalOptions="Start" Command="{Binding AddAttachmentCommand}" Margin="5"/>
+            <StackLayout x:Name="AttachmentStack" Orientation="Vertical">
+                
+            </StackLayout>
             <StackLayout Orientation="Horizontal">
                 <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
                 <Button Text="Cancel" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>

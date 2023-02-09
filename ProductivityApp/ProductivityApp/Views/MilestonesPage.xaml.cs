@@ -10,14 +10,14 @@ namespace ProductivityApp.Views
     public partial class MilestonesPage : ContentPage
 	{
         private readonly MilestonesViewModel _viewModel;
-        private readonly IDataStore<Milestone> _dataStore;
+        private readonly IService<Milestone> _dataStore;
 
         public MilestonesPage()
         {
             InitializeComponent();
             using (var scope = App.container.BeginLifetimeScope())
             {
-                _dataStore = scope.Resolve<IDataStore<Milestone>>();
+                _dataStore = scope.Resolve<IService<Milestone>>();
             }
             BindingContext = _viewModel = new MilestonesViewModel(_dataStore); ;
         }

@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace ProductivityApp.Services
 {
-    public class MilestoneDataStore : IDataStore<Milestone>
+    public class MilestoneService : IService<Milestone>
     {
         private readonly List<Milestone> milestones;
         private readonly string localDataPath;
 
-        public MilestoneDataStore()
+        public MilestoneService()
         {
             milestones = new List<Milestone>();
         }
 
-        public MilestoneDataStore(string localDataPath)
+        public MilestoneService(string localDataPath)
         {
             if(string.IsNullOrWhiteSpace(localDataPath))
             {

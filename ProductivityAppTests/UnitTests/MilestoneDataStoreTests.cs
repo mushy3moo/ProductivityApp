@@ -16,7 +16,7 @@ namespace ProductivityAppTests.UnitTests
         public async Task AddItemAsync_AddsMilestoneToDataStore()
         {
             var expectedMilestone = new Milestone { Id = Guid.NewGuid().ToString(), Label = "Test Milestone" };
-            var dataStore = new MilestoneDataStore();
+            var dataStore = new MilestoneService();
 
             var result = await dataStore.AddItemAsync(expectedMilestone);
             var resultData = await dataStore.GetItemsAsync();
@@ -37,7 +37,7 @@ namespace ProductivityAppTests.UnitTests
                 new Milestone {Id = Guid.NewGuid().ToString(), Label = "Test Milestone 2" },
                 new Milestone {Id = Guid.NewGuid().ToString(), Label = "Test Milestone 3" }
             };
-            var dataStore = new MilestoneDataStore();
+            var dataStore = new MilestoneService();
 
             var result = await dataStore.AddItemsAsync(expectedMilestones);
             var resultData = await dataStore.GetItemsAsync();
@@ -56,7 +56,7 @@ namespace ProductivityAppTests.UnitTests
         {
             var id = Guid.NewGuid().ToString();
             var milestone = new Milestone { Id = id, Description = "Initial milestone" };
-            var dataStore = new MilestoneDataStore();
+            var dataStore = new MilestoneService();
 
             await dataStore.AddItemAsync(milestone);
             var result = await dataStore.GetItemAsync(id);
@@ -73,7 +73,7 @@ namespace ProductivityAppTests.UnitTests
                 new Milestone { Id = "2", Label = "Milestone 2" },
                 new Milestone { Id = "3", Label = "Milestone 3" }
             };
-            var dataStore = new MilestoneDataStore();
+            var dataStore = new MilestoneService();
 
             await dataStore.AddItemsAsync(milestoneList);
             var data = await dataStore.GetItemsAsync();
@@ -97,7 +97,7 @@ namespace ProductivityAppTests.UnitTests
                 Id = id,
                 Label = expectedLable
             };
-            var dataStore = new MilestoneDataStore();
+            var dataStore = new MilestoneService();
 
             await dataStore.AddItemAsync(milestone);
             var result = await dataStore.UpdateItemAsync(updatedMilestone);
@@ -114,7 +114,7 @@ namespace ProductivityAppTests.UnitTests
         [Test]
         public async Task DeleteItemAsync_RemovesMilestoneFromDataStore()
         {
-            var dataStore = new MilestoneDataStore();
+            var dataStore = new MilestoneService();
             var id = "2";
             var milestoneList = new List<Milestone>
             {
@@ -141,7 +141,7 @@ namespace ProductivityAppTests.UnitTests
         {
             var expectedMessage = "String argument cannot be null or white space";
 
-            var resultExecption = Assert.Throws<ArgumentNullException>(() => new MilestoneDataStore(str));
+            var resultExecption = Assert.Throws<ArgumentNullException>(() => new MilestoneService(str));
             var result = resultExecption.Message.Contains(expectedMessage);
             Assert.That(result, Is.True);
         }
@@ -150,7 +150,7 @@ namespace ProductivityAppTests.UnitTests
         public void SaveItemsLocalThrowsExpectionWhenDirectoryNotFound()
         {
             var expectedMessage = $"The specified directory does not exist: ";
-            var dataStore = new MilestoneDataStore();
+            var dataStore = new MilestoneService();
 
             var resultExecption = Assert.Throws<DirectoryNotFoundException>(() => dataStore.SaveItemsLocal());
             var result = resultExecption.Message.Contains(expectedMessage);
@@ -164,7 +164,7 @@ namespace ProductivityAppTests.UnitTests
             var expectedPath = Path.Combine(pathUWP, "milestones.json");
 
             Directory.CreateDirectory(pathUWP);
-            var dataStore = new MilestoneDataStore(pathUWP);
+            var dataStore = new MilestoneService(pathUWP);
             var milestone = new Milestone
             {
                 Id = Guid.NewGuid().ToString(),
@@ -188,7 +188,7 @@ namespace ProductivityAppTests.UnitTests
         public void LoadItemsLocalPassesEmptyListIfNoFileFound()
         {
             var path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            var dataStore = new MilestoneDataStore(path);
+            var dataStore = new MilestoneService(path);
 
             var milestones = dataStore.LoadItemsLocal();
 
@@ -199,7 +199,7 @@ namespace ProductivityAppTests.UnitTests
         public void LoadItemsLocalThrowsExpectionWhenDirectoryNotFound()
         {
             var expectedMessage = $"The specified directory does not exist: ";
-            var dataStore = new MilestoneDataStore();
+            var dataStore = new MilestoneService();
 
             var resultExecption = Assert.Throws<DirectoryNotFoundException>(() => dataStore.LoadItemsLocal());
             var result = resultExecption.Message.Contains(expectedMessage);
@@ -226,7 +226,7 @@ namespace ProductivityAppTests.UnitTests
             Directory.CreateDirectory(pathUWP);
             File.WriteAllText(fullPath, json);
 
-            var dataStore = new MilestoneDataStore(pathUWP);
+            var dataStore = new MilestoneService(pathUWP);
             var resultList = dataStore.LoadItemsLocal();
             var result = resultList.FirstOrDefault();
 

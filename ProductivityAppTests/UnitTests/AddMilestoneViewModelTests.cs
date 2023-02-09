@@ -21,7 +21,7 @@ namespace ProductivityAppTests.UnitTests
 
             using(var mock = AutoMock.GetLoose())
             {
-                var dataStore = mock.Create<MilestoneDataStore>();
+                var dataStore = mock.Create<MilestoneService>();
                 var viewModel = new AddMilestoneViewModel(dataStore)
                 {
                     Label = expectedLabel,
