@@ -62,41 +62,127 @@ namespace ProductivityApp.ViewModels
             set => SetProperty(ref attachments, value);
         }
 
+        private string GetImage(string contentType)
+        {
+            var source = "";
+
+            var fileType = contentType.ToLower().Split('/')[0];
+            if(fileType == "image")
+            {
+                source = "icon_image.png";
+            }
+            else if (fileType == "audio")
+            {
+                source = "icon_audio.png";
+            }
+            else if(fileType == "video")
+            {
+                source = "icon_video.png";
+            }
+            else
+            {
+                switch (contentType.ToLower())
+                {
+                    case "text/plain":
+                        source = "icon_txt.png";
+                        break;
+                    case "text/html":
+                        source = "icon_html.png";
+                        break;
+                    case "text/css":
+                        source = "icon_css.png";
+                        break;
+                    case "application/javascript":
+                        source = "icon_java.png";
+                        break;
+                    case "application/json":
+                        source = "icon_json.png";
+                        break;
+                    case "application/xml":
+                        source = "icon_xml.png";
+                        break;
+                    case "application/pdf":
+                        source = "icon_pdf.png";
+                        break;
+                    case "application/msword":
+                    case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+                        source = "icon_doc.png";
+                        break;
+                    case "application/vnd.ms-excel":
+                    case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+                        source = "icon_xls.png";
+                        break;
+                    case "application/vnd.ms-powerpoint":
+                    case "application/vnd.openxmlformats-officedocument.presentationml.presentation":
+                        source = "icon_ppt.png";
+                        break;
+                    default:
+                        source = "icon_none.png";
+                        break;
+                }
+            }
+            return source;
+        }
+
         private async void OnAddAttachment()
         {
             var file = await FilePicker.PickAsync();
-            
-            if(file != null)
+
+            if (file != null)
             {
                 await attachmentService.AddItemAsync(file.FullPath);
 
+                var attachmentFrame = new Frame
+                {
+                    BackgroundColor = Color.LightSlateGray,
+                    Padding = 15,
+                    Margin = 10
+                };
                 var stackLayout = new StackLayout
                 {
                     Orientation = StackOrientation.Horizontal
                 };
-                var attachmentLabel = new Label { Text = file.FileName };
-                var deleteAttachmentButton = new Button
-                { 
-                    Text = "Delete Attachment",
-                    Command = DeleteAttachmentCommand,
-                    CommandParameter = stackLayout
+                var image = new Image
+                {
+                    Source = GetImage(file.ContentType),
+                    Margin = new Thickness(3, 0, 7, 0),
+                    HorizontalOptions = LayoutOptions.Start
                 };
-                stackLayout.Children.Add(attachmentLabel);
-                stackLayout.Children.Add(deleteAttachmentButton);
-                attackmentStack.Children.Add(stackLayout);
+                var label = new Label 
+                { 
+                    Text = file.FileName,
+                    TextColor = Color.White,
+                    HorizontalOptions = LayoutOptions.StartAndExpand
+                };
+                var deleteButton = new ImageButton
+                { 
+                    AutomationId = "Delete " + file.FileName,
+                    Source = "icon_close.png",
+                    BackgroundColor = Color.LightSlateGray,
+                    HorizontalOptions = LayoutOptions.End,
+                    Command = DeleteAttachmentCommand,
+                    CommandParameter = attachmentFrame
+                };
+
+                stackLayout.Children.Add(image);
+                stackLayout.Children.Add(label);
+                stackLayout.Children.Add(deleteButton);
+                attachmentFrame.Content = stackLayout;
+                attackmentStack.Children.Add(attachmentFrame);
             }
         }
 
         private async void OnDeleteAttachment(object obj)
         {
-            var stackLayout = obj as StackLayout;
-            var label = stackLayout.Children.FirstOrDefault() as Label;
+            var frame = obj as Frame;
+            var stackLayout = frame.Children.FirstOrDefault() as StackLayout;
+            var label = stackLayout.Children[1] as Label;
             var filename = label.Text;
 
             var isSuccessful = await attachmentService.DeleteItemAsync(filename);
             if(isSuccessful)
             {
-                attackmentStack.Children.Remove(stackLayout);
+                attackmentStack.Children.Remove(frame);
             }
         }
 

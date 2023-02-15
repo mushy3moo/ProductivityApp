@@ -5,6 +5,7 @@ using NUnit.Framework;
 using ProductivityApp.Models;
 using ProductivityApp.Services;
 using ProductivityApp.ViewModels;
+using Xamarin.Forms;
 using Autofac.Extras.Moq;
 
 namespace ProductivityAppTests.UnitTests
@@ -19,10 +20,10 @@ namespace ProductivityAppTests.UnitTests
             var expectedDescription = "Test Description";
             var expectedDeadline = DateTime.Now;
 
-            using(var mock = AutoMock.GetLoose())
+            using (var mock = AutoMock.GetLoose())
             {
                 var dataStore = mock.Create<MilestoneService>();
-                var viewModel = new AddMilestoneViewModel(dataStore)
+                var viewModel = new AddMilestoneViewModel(dataStore, new StackLayout { })
                 {
                     Label = expectedLabel,
                     Description = expectedDescription,
@@ -32,7 +33,8 @@ namespace ProductivityAppTests.UnitTests
                 viewModel.SaveCommand.Execute(null);
 
                 var result = await dataStore.GetItemsAsync();
-                var milestone = result.ToList<Milestone>().FirstOrDefault();
+                var milestone = result.ToList().FirstOrDefault();
+
                 Assert.Multiple(() =>
                 {
                     Assert.That(milestone.Label, Is.EqualTo(expectedLabel));

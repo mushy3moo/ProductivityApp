@@ -32,11 +32,12 @@
                             LineBreakMode="NoWrap"
                             Style="{DynamicResource ListItemDetailTextStyle}"
                             FontSize="13" />
-                            <Label 
+                            <Label
                             Text="{Binding Deadline}"
                             LineBreakMode="NoWrap"
                             Style="{DynamicResource ListItemDeadlineTextStyle}"
                             FontSize="13" />
+                            <Image Source="{Binding Attachments, Converter={StaticResource NullToImageConverter}}" />
                             <StackLayout.GestureRecognizers>
                                 <TapGestureRecognizer 
                                 NumberOfTapsRequired="1"

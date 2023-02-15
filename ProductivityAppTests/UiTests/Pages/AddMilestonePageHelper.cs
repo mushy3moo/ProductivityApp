@@ -10,6 +10,7 @@ namespace ProductivityAppTests.UiTests.Pages
         readonly Query titleTextbox;
         readonly Query descriptionTextbox;
         readonly Query deadlineTextbox;
+        readonly Query addAttachmentButton;
         readonly Query saveButton;
         readonly Query cancelButton;
 
@@ -18,6 +19,7 @@ namespace ProductivityAppTests.UiTests.Pages
             titleTextbox = c => c.ClassFull("FormsAppCompatEditText").Index((int)ClassIndex.label);
             descriptionTextbox = c => c.ClassFull("FormsAppCompatEditText").Index((int)ClassIndex.description);
             deadlineTextbox = c => c.Class("PickerEditText");
+            addAttachmentButton = c => c.Marked("Add Attachment");
             saveButton = c => c.Marked("Save");
             cancelButton = c => c.Marked("Cancel");
         }
@@ -44,6 +46,11 @@ namespace ProductivityAppTests.UiTests.Pages
             SelectElement(deadlineTextbox, timeout);
             app.Query(x => x.Class("DatePicker").Invoke("updateDate", selectDate.Year, selectDate.Month, selectDate.Day));
             app.Tap("OK");
+        }
+
+        public void SelectAddAttachmentButton(TimeSpan? timeout = default)
+        {
+            SelectElement(addAttachmentButton, timeout);
         }
 
         public void SelectCancelButton(TimeSpan? timeout = default)
