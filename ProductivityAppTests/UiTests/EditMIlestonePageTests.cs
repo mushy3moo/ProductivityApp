@@ -24,7 +24,6 @@ namespace ProductivityAppTests.UiTests
         [OneTimeSetUp]
         public void BeforeAllTests()
         {
-            AppManager.StartApp();
             AppManager.StartApp(AppDataMode.DoNotClear);
             
             milestonesPage.NavigateMenu("Milestones");
@@ -41,7 +40,7 @@ namespace ProductivityAppTests.UiTests
         [OneTimeTearDown]
         public virtual void AfterAllTests()
         {
-            AppManager.StartApp();
+            AppManager.StartApp(AppDataMode.Clear);
         }
 
         [SetUp]
@@ -128,17 +127,19 @@ namespace ProductivityAppTests.UiTests
         {
             var expectedTitle = "New Title";
             var expectedDescription = "New Title";
+            var milestoneIndex = 0;
 
             editMilestonePage.ClearTitleText();
             editMilestonePage.ClearDescriptionText();
             editMilestonePage.EnterTitleText(expectedTitle);
             editMilestonePage.EnterDescriptionText(expectedDescription);
+            App.Back();
 
             editMilestonePage.SelectSaveButton();
             editMilestonePage.SelectYesButton();
 
             milestonesPage.AssertOnPage();
-            var milestone = milestonesPage.GetMilestone(0);
+            var milestone = milestonesPage.GetMilestone(milestoneIndex);
             var resultTitle = milestone.Label;
             var resultDescription = milestone.Description;
 

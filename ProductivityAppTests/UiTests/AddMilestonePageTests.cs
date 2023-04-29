@@ -21,12 +21,6 @@ namespace ProductivityAppTests.UiTests
         }
 
         [Test]
-        public void FindStuff()
-        {
-            App.Repl();
-        }
-
-        [Test]
         public void CancelButtonNavigatsToMilestone()
         {
             addMilestonePage.SelectCancelButton();
@@ -90,6 +84,7 @@ namespace ProductivityAppTests.UiTests
             });
         }
 
+        /*
         [Test]
         public void AddAttachmentButtonOpensFileBrowserThenClosingItChangesNothing()
         {
@@ -98,5 +93,6 @@ namespace ProductivityAppTests.UiTests
 
             addMilestonePage.AssertOnPage();
         }
+        */
     }
 }

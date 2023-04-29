@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace ProductivityAppTests.UnitTests
 {
-    public class MilestoneDataStoreTests
+    public class MilestoneServiceTests
     {
         [Test]
         public async Task AddItemAsync_AddsMilestoneToDataStore()
@@ -49,6 +49,15 @@ namespace ProductivityAppTests.UnitTests
                 Assert.That(resultData, Does.Contain(expectedMilestones[1]));
                 Assert.That(resultData, Does.Contain(expectedMilestones[2]));
             });
+        }
+
+        [Test]
+        public async Task GetItemAsync_ReturnsNoCountWhenEmpty()
+        {
+            var dataStore = new MilestoneService();
+            var result = await dataStore.GetItemsAsync();
+
+            Assert.That(result.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -149,7 +158,7 @@ namespace ProductivityAppTests.UnitTests
         [Test]
         public void SaveItemsLocalThrowsExpectionWhenDirectoryNotFound()
         {
-            var expectedMessage = $"The specified directory does not exist: ";
+            var expectedMessage = "The specified directory does not exist: ";
             var dataStore = new MilestoneService();
 
             var resultExecption = Assert.Throws<DirectoryNotFoundException>(() => dataStore.SaveItemsLocal());
@@ -198,7 +207,7 @@ namespace ProductivityAppTests.UnitTests
         [Test]
         public void LoadItemsLocalThrowsExpectionWhenDirectoryNotFound()
         {
-            var expectedMessage = $"The specified directory does not exist: ";
+            var expectedMessage = "The specified directory does not exist: ";
             var dataStore = new MilestoneService();
 
             var resultExecption = Assert.Throws<DirectoryNotFoundException>(() => dataStore.LoadItemsLocal());

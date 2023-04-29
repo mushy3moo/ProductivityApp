@@ -1,54 +1,62 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Milestones"
              x:Class="ProductivityApp.Views.MilestonesPage"
-             Title="{Binding Title}"
-             xmlns:local="clr-namespace:ProductivityApp.ViewModels"  
-             xmlns:model="clr-namespace:ProductivityApp.Models"  
-             x:Name="BrowseMilestonesPage">
+             xmlns:local="clr-namespace:ProductivityApp.ViewModels"
+             xmlns:service="clr-namespace:ProductivityApp.Services"
+             xmlns:model="clr-namespace:ProductivityApp.Models">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Command="{Binding AddMilestoneCommand}"/>
     </ContentPage.ToolbarItems>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <service:AttachmentToBoolConverter x:Key="attachmentToBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <!--
       x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
       https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
     -->
-    <RefreshView x:DataType="local:MilestonesViewModel" Command="{Binding LoadMilestonesCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-        <CollectionView x:Name="MilestonesListView"
-                ItemsSource="{Binding Milestones}"
-                SelectionMode="None">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame Padding="5" BorderColor="Black" CornerRadius="10" Margin="5">
-                        <StackLayout Padding="10" x:DataType="model:Milestone">
-                            <Label 
-                            Text="{Binding Label}" 
-                            LineBreakMode="NoWrap" 
-                            Style="{DynamicResource ListItemTextStyle}" 
-                            FontSize="16" />
-                            <Label 
-                            Text="{Binding Description}" 
-                            LineBreakMode="NoWrap"
-                            Style="{DynamicResource ListItemDetailTextStyle}"
-                            FontSize="13" />
-                            <Label
-                            Text="{Binding Deadline}"
-                            LineBreakMode="NoWrap"
-                            Style="{DynamicResource ListItemDeadlineTextStyle}"
-                            FontSize="13" />
-                            <Image Source="{Binding Attachments, Converter={StaticResource NullToImageConverter}}" />
-                            <StackLayout.GestureRecognizers>
-                                <TapGestureRecognizer 
-                                NumberOfTapsRequired="1"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:MilestonesViewModel}}, Path=MilestoneTapped}"		
-                                CommandParameter="{Binding .}">
-                                </TapGestureRecognizer>
-                            </StackLayout.GestureRecognizers>
-                        </StackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </RefreshView>
+    <ContentPage.Content>
+        <RefreshView x:DataType="local:MilestonesViewModel" Command="{Binding LoadMilestonesCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+            <CollectionView x:Name="MilestonesListView" ItemsSource="{Binding Milestones}" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="5" BorderColor="Black" CornerRadius="10" Margin="5">
+                            <StackLayout x:DataType="model:Milestone" Padding="10">
+                                <Label 
+                                Text="{Binding Label}" 
+                                LineBreakMode="NoWrap" 
+                                Style="{DynamicResource ListItemTextStyle}" 
+                                FontSize="16" />
+                                <Label 
+                                Text="{Binding Description}" 
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                FontSize="13" />
+                                <Label
+                                Text="{Binding Deadline}"
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDeadlineTextStyle}"
+                                FontSize="13" />
+                                <Image
+                                Source="icon_attachment.png"
+                                IsVisible="{Binding Attachments, Converter={StaticResource attachmentToBoolConverter}}"/>
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                    NumberOfTapsRequired="1"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:MilestonesViewModel}}, Path=MilestoneTapped}"		
+                                    CommandParameter="{Binding .}">
+                                    </TapGestureRecognizer>
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </ContentPage.Content>
 </ContentPage>

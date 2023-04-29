@@ -21,19 +21,11 @@ namespace ProductivityApp.ViewModels
         public MilestonesViewModel(IService<Milestone> dataStore)
         {
             _dataStore = dataStore;
-            Title = "Milestones";
+
             Milestones = new ObservableCollection<Milestone>();
             LoadMilestonesCommand = new Command(async () => await ExecuteLoadMilestonesCommand());
-
             MilestoneTapped = new Command<Milestone>(OnMilestoneSelected);
-
             AddMilestoneCommand = new Command(OnAddMilestone);
-        }
-
-        public void OnAppearing()
-        {
-            IsBusy = true;
-            SelectedMilestone = null;
         }
 
         public Milestone SelectedMilestone
@@ -44,6 +36,12 @@ namespace ProductivityApp.ViewModels
                 SetProperty(ref _selectedMilestone, value);
                 OnMilestoneSelected(value);
             }
+        }
+
+        public void OnAppearing()
+        {
+            IsBusy = true;
+            SelectedMilestone = null;
         }
 
         private async void OnAddMilestone(object obj)

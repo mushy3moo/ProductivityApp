@@ -9,11 +9,6 @@ namespace ProductivityApp.Models
     {
         public string FileName { get; set; }
         public byte[] FileContent { get; set; }
-
-        public Attachment(string fileName, byte[] fileContent)
-        {
-           FileName = fileName;
-           FileContent = fileContent;
-        }
+        public string Image { get; set; }
     }
 }

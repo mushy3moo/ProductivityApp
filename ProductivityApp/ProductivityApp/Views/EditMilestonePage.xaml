@@ -4,18 +4,30 @@
              x:Class="ProductivityApp.Views.EditMilestonePage"
              Title="Edit Milestone"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
-             xmlns:viewmodels="clr-namespace:ProductivityApp.ViewModels" 
-             x:DataType="viewmodels:EditMilestoneViewModel"
+             xmlns:viewModels="clr-namespace:ProductivityApp.ViewModels"
+             xmlns:model="clr-namespace:ProductivityApp.Models"
              ios:Page.UseSafeArea="true">
 
     <ContentPage.Content>
-        <StackLayout Spacing="20" Padding="15">
+        <StackLayout x:DataType="viewModels:EditMilestoneViewModel" Spacing="20" Padding="15">
             <Label Text="Title:" FontSize="Large" FontAttributes="Bold" />
             <Entry x:Name="titleEntry" Text="{Binding Label, Mode=TwoWay}" FontSize="Medium" />
             <Label Text="Description:" FontSize="Large" FontAttributes="Bold" />
             <Entry x:Name="descriptionEntry"  Text="{Binding Description, Mode=TwoWay}" FontSize="Medium" />
             <Label Text="Deadline:" FontSize="Large" FontAttributes="Bold" />
             <DatePicker x:Name="deadlineDate" Date="{Binding Deadline, Mode=TwoWay}" FontSize="Medium" />
+            <ListView ItemsSource="{Binding Attachments}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BackgroundColor="LightSlateGray" Padding="15" Margin="10">
+                            <StackLayout x:DataType="model:Attachment" Orientation="Horizontal" >
+                                <Image Source="{Binding Image}" Margin="3, 0, 7, 0" HorizontalOptions="Start"/>
+                                <Label Text="{Binding FileName}" TextColor="White" HorizontalOptions="StartAndExpand"/>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
             <StackLayout Orientation="Horizontal">
                 <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
                 <Button Text="Delete" Command="{Binding DeleteCommand}" HorizontalOptions="FillAndExpand"></Button>

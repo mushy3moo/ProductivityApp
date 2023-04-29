@@ -14,6 +14,7 @@ namespace ProductivityApp.ViewModels
         private string label;
         private string description;
         private DateTime deadline;
+        private Attachment attachments;
         private readonly IService<Milestone> _dataStore;
         public string Id { get; set; }
         public Command SaveCommand { get; }
@@ -57,6 +58,12 @@ namespace ProductivityApp.ViewModels
         {
             get => deadline;
             set => SetProperty(ref deadline, value);
+        }
+
+        public Attachment Attachments
+        {
+            get => attachments;
+            set => SetProperty(ref attachments, value);
         }
 
         private async void LoadMilestoneId(string milestoneId)
