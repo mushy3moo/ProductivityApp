@@ -76,7 +76,5 @@ namespace ProductivityApp
                 Directory.CreateDirectory(localDataPath);
             }
         }
-
-        private void 
     }
 }

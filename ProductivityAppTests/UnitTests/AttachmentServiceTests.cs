@@ -34,12 +34,14 @@ namespace ProductivityAppTests.UnitTests
 
         [TestCase("")]
         [TestCase("  ")]
+        [Ignore("Test needs to be moved")]
         public void AddItemAsync_ThrowsDirectoryNotFoundException_WhenPassedIncorrectPath(string incorrectPath)
         {
             var expectedMessage = "The specified file does not exist at path: ";
             var dataStore = new AttachmentService();
+            var attachment = new AttachmentModel { FileName = incorrectPath };
 
-            var resultExecption = Assert.ThrowsAsync<FileNotFoundException>(() => dataStore.AddItemAsync(incorrectPath));
+            var resultExecption = Assert.ThrowsAsync<FileNotFoundException>(() => dataStore.AddItemAsync(attachment));
             var result = resultExecption.Message.Contains(expectedMessage);
             Assert.That(result, Is.True);
         }

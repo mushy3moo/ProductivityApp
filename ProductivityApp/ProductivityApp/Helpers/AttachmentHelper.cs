@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace ProductivityApp.Factories
+namespace ProductivityApp.Helpers
 {
     public class AttachmentHelper : Disposable
     {
-        private AttachmentModel Attachment { get => Attachment; set => Attachment = value; }
-        private string FilePath { get => FilePath; set => FilePath = value; }
+        public AttachmentModel Attachment { get; set; }
+        public string FilePath { get; set; }
 
         public AttachmentHelper() 
         {

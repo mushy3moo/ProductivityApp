@@ -26,7 +26,7 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Frame Padding="5" BorderColor="Black" CornerRadius="10" Margin="5">
-                            <StackLayout x:DataType="model:Milestone" Padding="10">
+                            <StackLayout x:DataType="model:MilestoneModel" Padding="10">
                                 <Label 
                                 Text="{Binding Label}" 
                                 LineBreakMode="NoWrap" 

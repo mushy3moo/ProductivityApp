@@ -1,4 +1,5 @@
-﻿using ProductivityApp.Models;
+﻿using ProductivityApp.Helpers;
+using ProductivityApp.Models;
 using ProductivityApp.Services;
 using System;
 using System.Collections.Generic;
@@ -65,11 +66,16 @@ namespace ProductivityApp.ViewModels
         private async void OnAddAttachment()
         {
             var file = await FilePicker.PickAsync();
-
+            var attachment = new AttachmentModel();
+            using(var attachmentHelper = new AttachmentHelper())
+            {
+                attachmentHelper.FilePath = file.FullPath;
+                attachmentHelper.SetFileContent();
+                attachmentHelper.SetIconImageFromMime(file.ContentType);
+                attachment = attachmentHelper.Attachment;
+            }
             if (file != null)
             {
-                await attachmentService.AddItemAsync(file.FullPath);
-
                 var attachmentFrame = new Frame
                 {
                     BackgroundColor = Color.LightSlateGray,
@@ -82,18 +88,18 @@ namespace ProductivityApp.ViewModels
                 };
                 var image = new Image
                 {
-                    Source = attachmentService.GetIconImageFromMime(file.ContentType),
+                    Source = attachment.Image,
                     Margin = new Thickness(3, 0, 7, 0),
                     HorizontalOptions = LayoutOptions.Start
                 };
-                var label = new Label 
-                { 
+                var label = new Label
+                {
                     Text = file.FileName,
                     TextColor = Color.White,
                     HorizontalOptions = LayoutOptions.StartAndExpand
                 };
                 var deleteButton = new ImageButton
-                { 
+                {
                     AutomationId = "Delete " + file.FileName,
                     Source = "icon_close.png",
                     BackgroundColor = Color.LightSlateGray,
@@ -101,12 +107,18 @@ namespace ProductivityApp.ViewModels
                     Command = DeleteAttachmentCommand,
                     CommandParameter = attachmentFrame
                 };
-
                 stackLayout.Children.Add(image);
                 stackLayout.Children.Add(label);
                 stackLayout.Children.Add(deleteButton);
                 attachmentFrame.Content = stackLayout;
                 attackmentStack.Children.Add(attachmentFrame);
+
+                var isSuccessful = await attachmentService.AddItemAsync(attachment);
+                if (!isSuccessful)
+                {
+                    var errorMessage = "";
+                    throw new Exception(errorMessage);
+                }
             }
         }
 
