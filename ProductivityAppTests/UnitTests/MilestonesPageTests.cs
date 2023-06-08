@@ -19,7 +19,7 @@ namespace ProductivityAppTests.UnitTests
             using (var mock = AutoMock.GetLoose())
             {
                 var dataStore = mock.Create<MilestoneService>();
-                var expectedMilestone = new Milestone()
+                var expectedMilestone = new MilestoneModel()
                 {
                     Id = Guid.NewGuid().ToString(),
                     Label = "Test Label",
@@ -43,16 +43,16 @@ namespace ProductivityAppTests.UnitTests
             using (var mock = AutoMock.GetLoose())
             {
                 var dataStore = mock.Create<MilestoneService>();
-                var expectedMilestones = new List<Milestone>
+                var expectedMilestones = new List<MilestoneModel>
                 {
-                    new Milestone
+                    new MilestoneModel
                     {
                         Id = Guid.NewGuid().ToString(),
                         Label = "Test Label",
                         Description = "Test Description",
                         Deadline = DateTime.Now
                     },
-                    new Milestone
+                    new MilestoneModel
                     {
                         Id = Guid.NewGuid().ToString(),
                         Label = "Test Label 2",

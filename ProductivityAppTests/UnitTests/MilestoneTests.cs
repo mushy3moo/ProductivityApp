@@ -9,7 +9,7 @@ namespace ProductivityAppTests.UnitTests
         [Test]
         public void NewMIlestoneSetsIsCompleteToFalse()
         {
-            var milestone = new Milestone();
+            var milestone = new MilestoneModel();
             var result = milestone.IsCompleted;
             
             Assert.That(result, Is.False);
@@ -20,7 +20,7 @@ namespace ProductivityAppTests.UnitTests
         {
             var expected = DateTime.Now;
 
-            var milestone = new Milestone();
+            var milestone = new MilestoneModel();
             var actual = milestone.CreatedOn;
 
             Assert.That((actual - expected).TotalSeconds, Is.LessThan(1));

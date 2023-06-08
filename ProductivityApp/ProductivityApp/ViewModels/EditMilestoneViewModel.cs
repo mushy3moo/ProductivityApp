@@ -14,13 +14,13 @@ namespace ProductivityApp.ViewModels
         private string label;
         private string description;
         private DateTime deadline;
-        private Attachment attachments;
-        private readonly IService<Milestone> _dataStore;
+        private AttachmentModel attachments;
+        private readonly IService<MilestoneModel> _dataStore;
         public string Id { get; set; }
         public Command SaveCommand { get; }
         public Command DeleteCommand { get; }
 
-        public EditMilestoneViewModel(IService<Milestone> dataStore)
+        public EditMilestoneViewModel(IService<MilestoneModel> dataStore)
         {
             _dataStore = dataStore;
             SaveCommand = new Command(OnSave, ValidateSave);
@@ -60,7 +60,7 @@ namespace ProductivityApp.ViewModels
             set => SetProperty(ref deadline, value);
         }
 
-        public Attachment Attachments
+        public AttachmentModel Attachments
         {
             get => attachments;
             set => SetProperty(ref attachments, value);
@@ -107,7 +107,7 @@ namespace ProductivityApp.ViewModels
 
             if(alertResult)
             {
-                Milestone newMilestone = new Milestone()
+                MilestoneModel newMilestone = new MilestoneModel()
                 {
                     Id = milestoneId,
                     Label = label,

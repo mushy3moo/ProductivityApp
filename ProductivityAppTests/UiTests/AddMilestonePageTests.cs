@@ -65,7 +65,7 @@ namespace ProductivityAppTests.UiTests
         [Test]
         public void SaveButtonCreatesMilestoneWhenFormIsFilled()
         {
-            var expectedMilestone = new Milestone()
+            var expectedMilestone = new MilestoneModel()
             {
                 Label = "Test Milestone",
                 Description = "Test Description"

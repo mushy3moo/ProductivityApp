@@ -15,7 +15,7 @@ namespace ProductivityAppTests.UnitTests
         [Test]
         public async Task AddItemAsync_AddsMilestoneToDataStore()
         {
-            var expectedMilestone = new Milestone { Id = Guid.NewGuid().ToString(), Label = "Test Milestone" };
+            var expectedMilestone = new MilestoneModel { Id = Guid.NewGuid().ToString(), Label = "Test Milestone" };
             var dataStore = new MilestoneService();
 
             var result = await dataStore.AddItemAsync(expectedMilestone);
@@ -31,11 +31,11 @@ namespace ProductivityAppTests.UnitTests
         [Test]
         public async Task AddItemsAsync_AddsMultipleMilestoneToDataStore()
         {
-            var expectedMilestones = new List<Milestone> 
+            var expectedMilestones = new List<MilestoneModel> 
             {
-                new Milestone {Id = Guid.NewGuid().ToString(), Label = "Test Milestone 1" },
-                new Milestone {Id = Guid.NewGuid().ToString(), Label = "Test Milestone 2" },
-                new Milestone {Id = Guid.NewGuid().ToString(), Label = "Test Milestone 3" }
+                new MilestoneModel {Id = Guid.NewGuid().ToString(), Label = "Test Milestone 1" },
+                new MilestoneModel {Id = Guid.NewGuid().ToString(), Label = "Test Milestone 2" },
+                new MilestoneModel {Id = Guid.NewGuid().ToString(), Label = "Test Milestone 3" }
             };
             var dataStore = new MilestoneService();
 
@@ -64,7 +64,7 @@ namespace ProductivityAppTests.UnitTests
         public async Task GetItemAsync_ReturnsCorrectMilestone()
         {
             var id = Guid.NewGuid().ToString();
-            var milestone = new Milestone { Id = id, Description = "Initial milestone" };
+            var milestone = new MilestoneModel { Id = id, Description = "Initial milestone" };
             var dataStore = new MilestoneService();
 
             await dataStore.AddItemAsync(milestone);
@@ -76,11 +76,11 @@ namespace ProductivityAppTests.UnitTests
         [Test]
         public async Task GetItemsAsync_ReturnsAllMilestones()
         {
-            var milestoneList = new List<Milestone>
+            var milestoneList = new List<MilestoneModel>
             {
-                new Milestone { Id = "1", Label = "Milestone 1" },
-                new Milestone { Id = "2", Label = "Milestone 2" },
-                new Milestone { Id = "3", Label = "Milestone 3" }
+                new MilestoneModel { Id = "1", Label = "Milestone 1" },
+                new MilestoneModel { Id = "2", Label = "Milestone 2" },
+                new MilestoneModel { Id = "3", Label = "Milestone 3" }
             };
             var dataStore = new MilestoneService();
 
@@ -96,12 +96,12 @@ namespace ProductivityAppTests.UnitTests
         {
             var id = Guid.NewGuid().ToString();
             var expectedLable = "Updated milestone";
-            var milestone = new Milestone 
+            var milestone = new MilestoneModel 
             { 
                 Id = id,
                 Label = "Test Milestone"
             };
-            var updatedMilestone = new Milestone 
+            var updatedMilestone = new MilestoneModel 
             { 
                 Id = id,
                 Label = expectedLable
@@ -125,11 +125,11 @@ namespace ProductivityAppTests.UnitTests
         {
             var dataStore = new MilestoneService();
             var id = "2";
-            var milestoneList = new List<Milestone>
+            var milestoneList = new List<MilestoneModel>
             {
-                new Milestone { Id = "1", Label = "Milestone 1" },
-                new Milestone { Id = id, Label = "Milestone 2" },
-                new Milestone { Id = "3", Label = "Milestone 3" }
+                new MilestoneModel { Id = "1", Label = "Milestone 1" },
+                new MilestoneModel { Id = id, Label = "Milestone 2" },
+                new MilestoneModel { Id = "3", Label = "Milestone 3" }
             };
 
             await dataStore.AddItemsAsync(milestoneList);
@@ -174,7 +174,7 @@ namespace ProductivityAppTests.UnitTests
 
             Directory.CreateDirectory(pathUWP);
             var dataStore = new MilestoneService(pathUWP);
-            var milestone = new Milestone
+            var milestone = new MilestoneModel
             {
                 Id = Guid.NewGuid().ToString(),
                 Label = "Test Label",
@@ -220,14 +220,14 @@ namespace ProductivityAppTests.UnitTests
         {
             var pathUWP = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ProductivityApp", "data");
             var fullPath = Path.Combine(pathUWP, "milestones.json");
-            var expectedMilestone = new Milestone
+            var expectedMilestone = new MilestoneModel
             {
                 Id = Guid.NewGuid().ToString(),
                 Label = "Test Label",
                 Description = "Test Description",
                 Deadline = DateTime.UtcNow
             };
-            var milestonesList = new List<Milestone> {
+            var milestonesList = new List<MilestoneModel> {
                 expectedMilestone
             };
 

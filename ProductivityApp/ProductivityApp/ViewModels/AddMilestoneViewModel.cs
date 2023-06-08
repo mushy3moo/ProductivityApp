@@ -14,19 +14,19 @@ namespace ProductivityApp.ViewModels
         private string label;
         private string description;
         private DateTime deadline;
-        private List<Attachment> attachments;
+        private List<AttachmentModel> attachments;
         private StackLayout attackmentStack;
         private readonly AttachmentService attachmentService;
-        private readonly IService<Milestone> _dataStore;
+        private readonly IService<MilestoneModel> _dataStore;
         public Command AddAttachmentCommand { get; }
         public Command DeleteAttachmentCommand { get; }
         public Command SaveCommand { get; }
         public Command CancelCommand { get; }
 
-        public AddMilestoneViewModel(IService<Milestone> dataStore, StackLayout attackmentStackLayout)
+        public AddMilestoneViewModel(IService<MilestoneModel> dataStore, StackLayout attackmentStackLayout)
         {
             _dataStore = dataStore;
-            attachments = new List<Attachment>();
+            attachments = new List<AttachmentModel>();
             attachmentService = new AttachmentService();
             attackmentStack = attackmentStackLayout;
 
@@ -56,7 +56,7 @@ namespace ProductivityApp.ViewModels
             set => SetProperty(ref deadline, value);
         }
 
-        public List<Attachment> Attachments
+        public List<AttachmentModel> Attachments
         {
             get => attachments;
             set => SetProperty(ref attachments, value);
@@ -141,7 +141,7 @@ namespace ProductivityApp.ViewModels
             var data = await attachmentService.GetItemsAsync();
             Attachments = data.ToList();
 
-            Milestone newMilestone = new Milestone()
+            MilestoneModel newMilestone = new MilestoneModel()
             {
                 Id = Guid.NewGuid().ToString(),
                 Label = label,

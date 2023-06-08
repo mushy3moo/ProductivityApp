@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace ProductivityApp.Models
 {
-    public class Milestone
+    public class MilestoneModel
     {
         [JsonProperty("id")]
         public string Id { get; set; }
@@ -28,18 +28,18 @@ namespace ProductivityApp.Models
         public bool IsCompleted { get; set; }
 
         [JsonProperty("attachments")]
-        public List<Attachment> Attachments { get; set; }
+        public List<AttachmentModel> Attachments { get; set; }
 
         [JsonProperty("parentMilestone")]
-        public Milestone ParentMilestone { get; set; }
+        public MilestoneModel ParentMilestone { get; set; }
 
         [JsonProperty("childMilestones")]
-        public List<Milestone> ChildMilestones { get; set; }
+        public List<MilestoneModel> ChildMilestones { get; set; }
 
         [JsonProperty("childObjectives")]
-        public List<Objective> ChildObjectives { get; set; }
+        public List<ObjectiveModel> ChildObjectives { get; set; }
 
-        public Milestone()
+        public MilestoneModel()
         {
             CreatedOn = DateTime.Now;
             IsCompleted = false;

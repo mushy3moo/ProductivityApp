@@ -39,7 +39,7 @@ namespace ProductivityApp
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<MilestoneService>().As<IService<Milestone>>().SingleInstance();
+            builder.RegisterType<MilestoneService>().As<IService<MilestoneModel>>().SingleInstance();
             builder.RegisterInstance(localDataPath).As<string>();
 
             container = builder.Build();
@@ -76,5 +76,7 @@ namespace ProductivityApp
                 Directory.CreateDirectory(localDataPath);
             }
         }
+
+        private void 
     }
 }

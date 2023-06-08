@@ -11,24 +11,24 @@ namespace ProductivityApp.ViewModels
 {
     public class MilestonesViewModel : BaseViewModel
     {
-        private Milestone _selectedMilestone;
-        private readonly IService<Milestone> _dataStore;
-        public ObservableCollection<Milestone> Milestones { get; }
+        private MilestoneModel _selectedMilestone;
+        private readonly IService<MilestoneModel> _dataStore;
+        public ObservableCollection<MilestoneModel> Milestones { get; }
         public Command LoadMilestonesCommand { get; }
         public Command AddMilestoneCommand { get; }
-        public Command<Milestone> MilestoneTapped { get; }
+        public Command<MilestoneModel> MilestoneTapped { get; }
 
-        public MilestonesViewModel(IService<Milestone> dataStore)
+        public MilestonesViewModel(IService<MilestoneModel> dataStore)
         {
             _dataStore = dataStore;
 
-            Milestones = new ObservableCollection<Milestone>();
+            Milestones = new ObservableCollection<MilestoneModel>();
             LoadMilestonesCommand = new Command(async () => await ExecuteLoadMilestonesCommand());
-            MilestoneTapped = new Command<Milestone>(OnMilestoneSelected);
+            MilestoneTapped = new Command<MilestoneModel>(OnMilestoneSelected);
             AddMilestoneCommand = new Command(OnAddMilestone);
         }
 
-        public Milestone SelectedMilestone
+        public MilestoneModel SelectedMilestone
         {
             get => _selectedMilestone;
             set
@@ -49,7 +49,7 @@ namespace ProductivityApp.ViewModels
             await Shell.Current.GoToAsync(nameof(AddMilestonePage));
         }
 
-        private async void OnMilestoneSelected(Milestone Milestone)
+        private async void OnMilestoneSelected(MilestoneModel Milestone)
         {
             if (Milestone == null)
                 return;

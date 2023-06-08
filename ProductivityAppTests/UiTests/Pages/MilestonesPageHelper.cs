@@ -35,7 +35,7 @@ namespace ProductivityAppTests.UiTests.Pages
             SelectElement(c => c.ClassFull("LabelAppCompatRenderer").Index(index), timeout);
         }
 
-        public Milestone GetMilestone(int index, TimeSpan? timeout = default)
+        public MilestoneModel GetMilestone(int index, TimeSpan? timeout = default)
         {
             var allMilestones = GetElements(milestoneElements, timeout);
             var indexMod = (index * milestoneEnumCount);
@@ -44,7 +44,7 @@ namespace ProductivityAppTests.UiTests.Pages
             var description = allMilestones[(int)ClassIndex.description + indexMod].Text;
             var deadline = allMilestones[(int)ClassIndex.deadline + indexMod].Text;
 
-            var milestone = new Milestone()
+            var milestone = new MilestoneModel()
             {
                 Label = label,
                 Description = description,

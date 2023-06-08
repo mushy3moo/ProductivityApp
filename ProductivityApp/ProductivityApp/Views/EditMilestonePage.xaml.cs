@@ -8,15 +8,14 @@ namespace ProductivityApp.Views
 {
 	public partial class EditMilestonePage : ContentPage
 	{
-        private readonly IService<Milestone> _dataStore;
         public EditMilestonePage()
 		{
 			InitializeComponent();
             using (var scope = App.container.BeginLifetimeScope())
             {
-                _dataStore = scope.Resolve<IService<Milestone>>();
+                var _dataStore = scope.Resolve<IService<MilestoneModel>>();
+                BindingContext = new EditMilestoneViewModel(_dataStore);
             }
-            BindingContext = new EditMilestoneViewModel(_dataStore);
 
             double marginValue = Application.Current.MainPage.Height * 0.03;
             titleEntry.Margin = new Thickness(0, 0, 0, marginValue);

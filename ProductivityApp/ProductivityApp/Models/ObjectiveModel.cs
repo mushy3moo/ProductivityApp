@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ProductivityApp.Models
 {
-    public class Objective
+    public class ObjectiveModel
     {
         public string Id { get; set; }
         public string Title { get; set; }
@@ -12,7 +12,7 @@ namespace ProductivityApp.Models
         public DateTime Deadline { get; set; }
         public string Icon { get; set; }
         public bool IsCompleted { get; set; }
-        public Objective ParentTask { get; set; }
-        public List<Objective> AttachedTasks { get; set; }
+        public ObjectiveModel ParentTask { get; set; }
+        public List<ObjectiveModel> AttachedTasks { get; set; }
     }
 }

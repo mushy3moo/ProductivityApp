@@ -16,7 +16,7 @@ namespace ProductivityAppTests.UnitTests
             using(var mock = AutoMock.GetLoose())
             {
                 var dataStore = mock.Create<MilestoneService>();
-                var expectedMilestone = new Milestone()
+                var expectedMilestone = new MilestoneModel()
                 {
                     Id = Guid.NewGuid().ToString(),
                     Label = "Test Label",

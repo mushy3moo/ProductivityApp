@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace ProductivityApp.Services
 {
-    public class MilestoneService : IService<Milestone>
+    public class MilestoneService : IService<MilestoneModel>
     {
-        private readonly List<Milestone> milestones;
+        private readonly List<MilestoneModel> milestones;
         private readonly string localDataPath;
 
         public MilestoneService()
         {
-            milestones = new List<Milestone>();
+            milestones = new List<MilestoneModel>();
         }
 
         public MilestoneService(string localDataPath)
@@ -29,23 +29,23 @@ namespace ProductivityApp.Services
             milestones = LoadItemsLocal();
         }
         
-        public async Task<bool> AddItemAsync(Milestone item)
+        public async Task<bool> AddItemAsync(MilestoneModel item)
         {
             milestones.Add(item);
 
             return await Task.FromResult(true);
         }
 
-        public async Task<bool> AddItemsAsync(List<Milestone> items)
+        public async Task<bool> AddItemsAsync(List<MilestoneModel> items)
         {
             items.ForEach(item => milestones.Add(item));
 
             return await Task.FromResult(true);
         }
 
-        public async Task<bool> UpdateItemAsync(Milestone item)
+        public async Task<bool> UpdateItemAsync(MilestoneModel item)
         {
-            var oldItem = milestones.Where((Milestone arg) => arg.Id == item.Id).FirstOrDefault();
+            var oldItem = milestones.Where((MilestoneModel arg) => arg.Id == item.Id).FirstOrDefault();
             milestones.Remove(oldItem);
             milestones.Add(item);
 
@@ -54,18 +54,18 @@ namespace ProductivityApp.Services
 
         public async Task<bool> DeleteItemAsync(string id)
         {
-            var oldItem = milestones.Where((Milestone m) => m.Id == id).FirstOrDefault();
+            var oldItem = milestones.Where((MilestoneModel m) => m.Id == id).FirstOrDefault();
             milestones.Remove(oldItem);
 
             return await Task.FromResult(true);
         }
 
-        public async Task<Milestone> GetItemAsync(string id)
+        public async Task<MilestoneModel> GetItemAsync(string id)
         {
             return await Task.FromResult(milestones.FirstOrDefault(s => s.Id == id));
         }
 
-        public async Task<IEnumerable<Milestone>> GetItemsAsync(bool forceRefresh = false)
+        public async Task<IEnumerable<MilestoneModel>> GetItemsAsync(bool forceRefresh = false)
         {
             return await Task.FromResult(milestones);
         }
@@ -82,9 +82,9 @@ namespace ProductivityApp.Services
             File.WriteAllText(fullPath, json);
         }
 
-        public List<Milestone> LoadItemsLocal()
+        public List<MilestoneModel> LoadItemsLocal()
         {
-            var localMilestones = new List<Milestone>();
+            var localMilestones = new List<MilestoneModel>();
 
             if (!Directory.Exists(localDataPath))
             {
@@ -95,7 +95,7 @@ namespace ProductivityApp.Services
             {
                 var fullPath = Path.Combine(localDataPath, "milestones.json");
                 var json = File.ReadAllText(fullPath);
-                localMilestones = JsonConvert.DeserializeObject<List<Milestone>>(json);
+                localMilestones = JsonConvert.DeserializeObject<List<MilestoneModel>>(json);
             } catch(Exception ex)
             {
                 Console.WriteLine(ex.ToString()); //Replace with App Logger

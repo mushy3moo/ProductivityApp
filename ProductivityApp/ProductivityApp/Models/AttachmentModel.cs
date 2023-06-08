@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ProductivityApp.Models
 {
-    public class Attachment
+    public class AttachmentModel
     {
         public string FileName { get; set; }
         public byte[] FileContent { get; set; }

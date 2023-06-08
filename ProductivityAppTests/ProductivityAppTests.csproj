@@ -124,6 +124,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UnitTests\AttachmentHelperTests.cs" />
     <Compile Include="UiTests\AppManager.cs" />
     <Compile Include="UiTests\BaseTestFixture.cs" />
     <Compile Include="UiTests\EditMIlestonePageTests.cs" />

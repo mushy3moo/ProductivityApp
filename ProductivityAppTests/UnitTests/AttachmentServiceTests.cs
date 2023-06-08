@@ -15,20 +15,20 @@ namespace ProductivityAppTests.UnitTests
         [Test]
         public async Task AddItemAsync_AddsAttachment_ToDataStore()
         {
-            var currentDirectory = Directory.GetCurrentDirectory();
-            var testDirectory = Directory.GetParent(currentDirectory).Parent.FullName;
-            var fileName = "icon_attachment.png";
-            var filePath = Path.Combine(testDirectory, "UnitTests", "Data", fileName);
+            var expectedAttachment = new AttachmentModel
+            {
+                FileName = "icon_attachment.png"
+            };
             var dataStore = new AttachmentService();
 
-            var result = await dataStore.AddItemAsync(filePath);
+            var result = await dataStore.AddItemAsync(expectedAttachment);
             var data = await dataStore.GetItemsAsync();
             var resultAttachment = data.FirstOrDefault();
 
             Assert.Multiple(() =>
             {
                 Assert.That(result, Is.True);
-                Assert.That(resultAttachment.FileName, Does.Contain(fileName));
+                Assert.That(resultAttachment.FileName, Does.Contain(expectedAttachment.FileName));
             });
         }
 

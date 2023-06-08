@@ -11,10 +11,10 @@ namespace ProductivityAppTests.UiTests
 {
     public class EditMIlestonePageTests : BaseTestFixture
     {
-        Milestone expectedMilestone;
+        MilestoneModel expectedMilestone;
         public EditMIlestonePageTests(Platform platform) : base(platform) 
         {
-            expectedMilestone = new Milestone()
+            expectedMilestone = new MilestoneModel()
             {
                 Label = "Test Milestone",
                 Description = "Description of Milestone"

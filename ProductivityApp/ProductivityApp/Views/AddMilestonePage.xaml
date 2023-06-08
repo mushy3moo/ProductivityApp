@@ -19,7 +19,7 @@
             <Label Text="Attachment:" FontSize="Medium" FontAttributes="Bold" />
             <Button Text="Add Attachment" HorizontalOptions="Start" Command="{Binding AddAttachmentCommand}" Margin="5"/>
             <StackLayout x:Name="AttachmentStack" Orientation="Vertical">
-
+                <!-- Created by AddMilestoneViewModel -->
             </StackLayout>
             <StackLayout Orientation="Horizontal">
                 <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
