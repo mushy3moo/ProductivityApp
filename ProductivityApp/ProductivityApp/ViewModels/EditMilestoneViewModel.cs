@@ -15,12 +15,12 @@ namespace ProductivityApp.ViewModels
         private string description;
         private DateTime deadline;
         private AttachmentModel attachments;
-        private readonly IService<MilestoneModel> _dataStore;
+        private readonly IDataService<MilestoneModel> _dataStore;
         public string Id { get; set; }
         public Command SaveCommand { get; }
         public Command DeleteCommand { get; }
 
-        public EditMilestoneViewModel(IService<MilestoneModel> dataStore)
+        public EditMilestoneViewModel(IDataService<MilestoneModel> dataStore)
         {
             _dataStore = dataStore;
             SaveCommand = new Command(OnSave, ValidateSave);
@@ -116,7 +116,7 @@ namespace ProductivityApp.ViewModels
                 };
 
                 await _dataStore.UpdateItemAsync(newMilestone);
-                _dataStore.SaveItemsLocal();
+                //_dataStore.SaveItemsLocal();
 
                 // This will pop the current page off the navigation stack
                 await Shell.Current.GoToAsync("..");

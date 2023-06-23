@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace ProductivityApp.Models
 {
-    public class MilestoneModel
+    public class MilestoneModel : IModel
     {
         [JsonProperty("id")]
         public string Id { get; set; }

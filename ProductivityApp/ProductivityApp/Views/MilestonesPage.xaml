@@ -4,7 +4,7 @@
              Title="Milestones"
              x:Class="ProductivityApp.Views.MilestonesPage"
              xmlns:local="clr-namespace:ProductivityApp.ViewModels"
-             xmlns:service="clr-namespace:ProductivityApp.Services"
+             xmlns:helper="clr-namespace:ProductivityApp.Helpers"
              xmlns:model="clr-namespace:ProductivityApp.Models">
 
     <ContentPage.ToolbarItems>
@@ -13,7 +13,7 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <service:AttachmentToBoolConverter x:Key="attachmentToBoolConverter" />
+            <helper:AttachmentToBoolConverter x:Key="attachmentToBoolConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
     <!--

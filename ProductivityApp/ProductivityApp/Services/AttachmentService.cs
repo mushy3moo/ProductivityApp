@@ -34,10 +34,19 @@ namespace ProductivityApp.Services
             return await Task.FromResult(attachment);
         }
 
-        public async Task<IEnumerable<AttachmentModel>> GetItemsAsync()
+        public async Task<IEnumerable<AttachmentModel>> GetItemsAsync(bool forceRefresh = false)
         {
             return await Task.FromResult(attachments);
         }
+
+        public async Task<bool> UpdateItemAsync(string fileName, AttachmentModel attachment) 
+        {
+            var oldAttachment = attachments.Find((AttachmentModel a) => a.FileName == fileName);
+            attachments.Remove(oldAttachment);
+            attachments.Add(attachment);
+            return await Task.FromResult(true);
+        }
+
 
         public async Task<bool> DeleteItemAsync(string fileName)
         {

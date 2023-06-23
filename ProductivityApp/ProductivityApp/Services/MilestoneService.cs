@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProductivityApp.Services
 {
-    public class MilestoneService : IService<MilestoneModel>
+    public class MilestoneService : IDataService<MilestoneModel>
     {
         private readonly List<MilestoneModel> milestones;
         private readonly string localDataPath;

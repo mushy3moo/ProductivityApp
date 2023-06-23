@@ -18,13 +18,13 @@ namespace ProductivityApp.ViewModels
         private List<AttachmentModel> attachments;
         private StackLayout attackmentStack;
         private readonly AttachmentService attachmentService;
-        private readonly IService<MilestoneModel> _dataStore;
+        private readonly IDataService<MilestoneModel> _dataStore;
         public Command AddAttachmentCommand { get; }
         public Command DeleteAttachmentCommand { get; }
         public Command SaveCommand { get; }
         public Command CancelCommand { get; }
 
-        public AddMilestoneViewModel(IService<MilestoneModel> dataStore, StackLayout attackmentStackLayout)
+        public AddMilestoneViewModel(IDataService<MilestoneModel> dataStore, StackLayout attackmentStackLayout)
         {
             _dataStore = dataStore;
             attachments = new List<AttachmentModel>();
@@ -163,7 +163,7 @@ namespace ProductivityApp.ViewModels
             };
 
             await _dataStore.AddItemAsync(newMilestone);
-            _dataStore.SaveItemsLocal();
+            //_dataStore.SaveItemsLocal();
 
             // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync("..");

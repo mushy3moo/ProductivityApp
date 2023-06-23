@@ -4,7 +4,7 @@ using System;
 
 namespace ProductivityAppTests.UnitTests
 {
-    public class MilestoneTests
+    public class MilestoneModelTests
     {
         [Test]
         public void NewMIlestoneSetsIsCompleteToFalse()

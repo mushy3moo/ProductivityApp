@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Text;
 using Xamarin.Forms;
 
-namespace ProductivityApp.Services
+namespace ProductivityApp.Helpers
 {
     public class AttachmentToBoolConverter : IValueConverter
     {

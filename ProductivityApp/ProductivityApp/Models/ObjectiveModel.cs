@@ -1,11 +1,13 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace ProductivityApp.Models
 {
-    public class ObjectiveModel
+    public class ObjectiveModel : IModel
     {
+        [JsonProperty("id")]
         public string Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }

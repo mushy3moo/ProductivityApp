@@ -13,7 +13,7 @@ namespace ProductivityApp.Views
 			InitializeComponent();
             using (var scope = App.container.BeginLifetimeScope())
             {
-                var _dataStore = scope.Resolve<IService<MilestoneModel>>();
+                var _dataStore = scope.Resolve<IDataService<MilestoneModel>>();
                 BindingContext = new AddMilestoneViewModel(_dataStore, AttachmentStack);
             }
         }

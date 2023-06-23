@@ -12,13 +12,13 @@ namespace ProductivityApp.ViewModels
     public class MilestonesViewModel : BaseViewModel
     {
         private MilestoneModel _selectedMilestone;
-        private readonly IService<MilestoneModel> _dataStore;
+        private readonly IDataService<MilestoneModel> _dataStore;
         public ObservableCollection<MilestoneModel> Milestones { get; }
         public Command LoadMilestonesCommand { get; }
         public Command AddMilestoneCommand { get; }
         public Command<MilestoneModel> MilestoneTapped { get; }
 
-        public MilestonesViewModel(IService<MilestoneModel> dataStore)
+        public MilestonesViewModel(IDataService<MilestoneModel> dataStore)
         {
             _dataStore = dataStore;
 
