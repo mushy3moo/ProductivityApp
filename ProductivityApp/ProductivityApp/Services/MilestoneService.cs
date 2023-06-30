@@ -52,7 +52,7 @@ namespace ProductivityApp.Services
             return await Task.FromResult(true);
         }
 
-        public async Task<bool> DeleteItemAsync(string id)
+        public async Task<bool> DeleteItemByIdAsync(string id)
         {
             var oldItem = milestones.Where((MilestoneModel m) => m.Id == id).FirstOrDefault();
             milestones.Remove(oldItem);
@@ -60,12 +60,12 @@ namespace ProductivityApp.Services
             return await Task.FromResult(true);
         }
 
-        public async Task<MilestoneModel> GetItemAsync(string id)
+        public async Task<MilestoneModel> GetItemByIdAsync(string id)
         {
             return await Task.FromResult(milestones.FirstOrDefault(s => s.Id == id));
         }
 
-        public async Task<IEnumerable<MilestoneModel>> GetItemsAsync(bool forceRefresh = false)
+        public async Task<IEnumerable<MilestoneModel>> GetItemsByIdAsync(bool forceRefresh = false)
         {
             return await Task.FromResult(milestones);
         }

@@ -21,7 +21,7 @@
                     <DataTemplate>
                         <Frame BackgroundColor="LightSlateGray" Padding="15" Margin="10">
                             <StackLayout x:DataType="model:AttachmentModel" Orientation="Horizontal" >
-                                <Image Source="{Binding Image}" Margin="3, 0, 7, 0" HorizontalOptions="Start"/>
+                                <Image Source="{Binding FileTypeIcon}" Margin="3, 0, 7, 0" HorizontalOptions="Start"/>
                                 <Label Text="{Binding FileName}" TextColor="White" HorizontalOptions="StartAndExpand"/>
                             </StackLayout>
                         </Frame>

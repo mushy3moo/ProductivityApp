@@ -65,7 +65,7 @@ namespace ProductivityApp.ViewModels
             try
             {
                 Milestones.Clear();
-                var milestones = await _dataStore.GetItemsAsync(true);
+                var milestones = await _dataStore.GetItemsByIdAsync(true);
                 foreach (var milestone in milestones)
                 {
                     Milestones.Add(milestone);

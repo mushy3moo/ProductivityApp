@@ -19,6 +19,36 @@ namespace ProductivityAppTests.UiTests.Pages
             milestoneEnumCount = ClassIndex.GetNames(typeof(ClassIndex)).Length;
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         protected override PlatformQuery Trait => new PlatformQuery
         {
             Android = pageTitle,

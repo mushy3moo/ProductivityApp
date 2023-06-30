@@ -32,7 +32,7 @@ namespace ProductivityAppTests.UnitTests
 
                 viewModel.SaveCommand.Execute(null);
 
-                var result = await dataStore.GetItemsAsync();
+                var result = await dataStore.GetItemsByIdAsync();
                 var milestone = result.ToList().FirstOrDefault();
 
                 Assert.Multiple(() =>

@@ -10,6 +10,7 @@ using Xamarin.Forms.Mocks;
 using ProductivityApp.Models;
 using ProductivityApp.Services;
 using NUnit.Framework.Internal;
+using Moq;
 
 namespace ProductivityAppTests.UnitTests
 {
@@ -19,8 +20,6 @@ namespace ProductivityAppTests.UnitTests
         [OneTimeSetUp]
         public void BeforeEachTest()
         {
-            var runtimePlatform = Device.UWP;
-            var requestedTheme = OSAppTheme.Unspecified;
             MockForms.Init();
         }
 
@@ -33,12 +32,15 @@ namespace ProductivityAppTests.UnitTests
                 Label = "Expected Milestone",
                 Description = "Test Description"
             };
-            var dataService = new LocalDataService<MilestoneModel>();
+            /*
+            var dataService = new DataService<MilestoneModel>();
 
             await dataService.AddItemAsync(expectedMilestone);
-            var resultMilestone = await dataService.GetItemAsync(expectedMilestone.Id);
+            var resultMilestone = await dataService.GetItemByIdAsync(expectedMilestone.Id);
 
             Assert.That(resultMilestone, Is.EqualTo(expectedMilestone));
+            */
+            Assert.Fail();
         }
     }
 }

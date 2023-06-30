@@ -1,52 +1,90 @@
 ﻿using Autofac.Util;
 using ProductivityApp.Models;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.Threading.Tasks;
 
 namespace ProductivityApp.Helpers
 {
     public class AttachmentHelper : Disposable
     {
-        public AttachmentModel Attachment { get; set; }
-        public string FilePath { get; set; }
+        public AttachmentHelper() { }
 
-        public AttachmentHelper() 
+        public async Task<AttachmentModel> CreateAttachmentAsync(string fileName)
         {
-            Attachment = new AttachmentModel();
-        }
 
-        public AttachmentHelper(string filePath) 
-        {
-            Attachment = new AttachmentModel();
-            FilePath = filePath;
-        }
-
-        public void SetFileName()
-        {
-            if (!File.Exists(FilePath))
+            if (File.Exists(fileName))
             {
-                throw new FileNotFoundException("The specified file does not exist at path: " + FilePath);
-            }
-
-            Attachment.FileName = Path.GetFileName(FilePath);
-        }
-
-        public void SetFileContent()
-        {
-            using (var stream = new FileStream(FilePath, FileMode.Open, FileAccess.Read))
-            {
-                using (var reader = new BinaryReader(stream))
+                return new AttachmentModel()
                 {
-                    Attachment.FileContent = reader.ReadBytes((int)stream.Length);
-                }
+                    Id = Guid.NewGuid().ToString(),
+                    FileName = fileName,
+                    FileContent = await ReadFileContentAsync(fileName),
+                    FileTypeIcon = GetFileTypeIcon(fileName)
+                };
+            }
+            else
+            {
+                return null;
             }
         }
 
-        public void SetIconImage()
+        public string SetIconImageFromMime(string contentType)
         {
-            var extention = FilePath.Split('.').Last();
+            var type = string.Empty;
+            var subType = string.Empty;
+
+            if (!string.IsNullOrWhiteSpace(contentType))
+            {
+                contentType = contentType.ToLower();
+                type = contentType.Split('/')[0];
+                subType = contentType.Split('/')[1];
+            }
+
+            string source = type switch
+            {
+                "image" => "icon_image.png",
+                "audio" => "icon_audio.png",
+                "video" => "icon_video.png",
+                "text" => subType switch
+                {
+                    "plain" => "icon_txt.png",
+                    "html" => "icon_html.png",
+                    "css" => "icon_css.png",
+                    _ => "icon_none.png",
+                },
+                "application" => subType switch
+                {
+                    "javascript" => "icon_java.png",
+                    "json" => "icon_json.png",
+                    "xml" => "icon_xml.png",
+                    "pdf" => "icon_pdf.png",
+                    "msword" => "icon_doc.png",
+                    "vnd.openxmlformats-officedocument.wordprocessingml.document" => "icon_doc.png",
+                    "vnd.ms-excel" => "icon_xls.png",
+                    "vnd.openxmlformats-officedocument.spreadsheetml.sheet" => "icon_xls.png",
+                    "vnd.ms-powerpoint" => "icon_ppt.png",
+                    "vnd.openxmlformats-officedocument.presentationml.presentation" => "icon_ppt.png",
+                    _ => "icon_none.png"
+                },
+                _ => "icon_none.png",
+            };
+            return source;
+        }
+
+        private async Task<byte[]> ReadFileContentAsync(string filePath)
+        {
+            using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            {
+                byte[] buffer = new byte[fileStream.Length];
+                await fileStream.ReadAsync(buffer, 0, buffer.Length);
+                return buffer;
+            }
+        }
+
+        private string GetFileTypeIcon(string filePath)
+        {
+            var extention = Path.GetExtension(filePath);
             string source;
 
             switch (extention.ToLower())
@@ -108,69 +146,7 @@ namespace ProductivityApp.Helpers
                     source = "icon_none.png";
                     break;
             }
-            Attachment.Image = source;
-        }
-
-        public void SetIconImageFromMime(string contentType)
-        {
-            var fileType = contentType.ToLower().Split('/')[0];
-            string source;
-
-            if (fileType == "image")
-            {
-                source = "icon_image.png";
-            }
-            else if (fileType == "audio")
-            {
-                source = "icon_audio.png";
-            }
-            else if (fileType == "video")
-            {
-                source = "icon_video.png";
-            }
-            else
-            {
-                switch (contentType.ToLower())
-                {
-                    case "text/plain":
-                        source = "icon_txt.png";
-                        break;
-                    case "text/html":
-                        source = "icon_html.png";
-                        break;
-                    case "text/css":
-                        source = "icon_css.png";
-                        break;
-                    case "application/javascript":
-                        source = "icon_java.png";
-                        break;
-                    case "application/json":
-                        source = "icon_json.png";
-                        break;
-                    case "application/xml":
-                        source = "icon_xml.png";
-                        break;
-                    case "application/pdf":
-                        source = "icon_pdf.png";
-                        break;
-                    case "application/msword":
-                    case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-                        source = "icon_doc.png";
-                        break;
-                    case "application/vnd.ms-excel":
-                    case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
-                        source = "icon_xls.png";
-                        break;
-                    case "application/vnd.ms-powerpoint":
-                    case "application/vnd.openxmlformats-officedocument.presentationml.presentation":
-                        source = "icon_ppt.png";
-                        break;
-                    default:
-                        source = "icon_none.png";
-                        break;
-                }
-            }
-            Attachment.Image = source;
+            return source;
         }
     }
 }

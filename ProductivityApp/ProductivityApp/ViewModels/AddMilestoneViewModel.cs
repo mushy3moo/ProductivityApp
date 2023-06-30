@@ -69,10 +69,7 @@ namespace ProductivityApp.ViewModels
             var attachment = new AttachmentModel();
             using(var attachmentHelper = new AttachmentHelper())
             {
-                attachmentHelper.FilePath = file.FullPath;
-                attachmentHelper.SetFileContent();
-                attachmentHelper.SetIconImageFromMime(file.ContentType);
-                attachment = attachmentHelper.Attachment;
+                attachment = await attachmentHelper.CreateAttachmentAsync(file.FileName);
             }
             if (file != null)
             {
@@ -88,7 +85,7 @@ namespace ProductivityApp.ViewModels
                 };
                 var image = new Image
                 {
-                    Source = attachment.Image,
+                    Source = attachment.FileTypeIcon,
                     Margin = new Thickness(3, 0, 7, 0),
                     HorizontalOptions = LayoutOptions.Start
                 };
@@ -163,7 +160,6 @@ namespace ProductivityApp.ViewModels
             };
 
             await _dataStore.AddItemAsync(newMilestone);
-            //_dataStore.SaveItemsLocal();
 
             // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync("..");

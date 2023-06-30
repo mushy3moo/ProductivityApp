@@ -70,7 +70,7 @@ namespace ProductivityApp.ViewModels
         {
             try
             {
-                var Milestone = await _dataStore.GetItemAsync(milestoneId);
+                var Milestone = await _dataStore.GetItemByIdAsync(milestoneId);
                 Id = Milestone.Id;
                 Label = Milestone.Label;
                 Description = Milestone.Description;
@@ -88,7 +88,7 @@ namespace ProductivityApp.ViewModels
 
             if (alertResult)
             {
-                await _dataStore.DeleteItemAsync(MilestoneId);
+                await _dataStore.DeleteItemByIdAsync(MilestoneId);
 
                 // This will pop the current page off the navigation stack
                 await Shell.Current.GoToAsync("..");
@@ -116,7 +116,6 @@ namespace ProductivityApp.ViewModels
                 };
 
                 await _dataStore.UpdateItemAsync(newMilestone);
-                //_dataStore.SaveItemsLocal();
 
                 // This will pop the current page off the navigation stack
                 await Shell.Current.GoToAsync("..");
