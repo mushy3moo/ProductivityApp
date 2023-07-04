@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -55,12 +56,7 @@ namespace ProductivityApp.Services
             }
         }
 
-        public Task<T> LoadItemAsync(T item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<IEnumerable<T>> LoadItemsAsync()
+        public async Task<IEnumerable<T>> LoadAllItemsAsync()
         {
 
             if (!Directory.Exists(DataPath))
@@ -103,14 +99,14 @@ namespace ProductivityApp.Services
             return await Task.FromResult(true);
         }
 
-        public async Task<bool> SaveItemsAsync(List<T> items)
+        public async Task<bool> SaveAllItemsAsync(IEnumerable<T> items)
         {
             if (!Directory.Exists(DataPath))
             {
                 throw new DirectoryNotFoundException("The specified directory does not exist: " + DataPath);
             }
 
-            var json = JsonConvert.SerializeObject(items);
+            var json = JsonConvert.SerializeObject(items.ToList());
             var fullPath = Path.Combine(DataPath, $"{nameof(T)}.json");
             using (var writer = new StreamWriter(fullPath, false))
             {

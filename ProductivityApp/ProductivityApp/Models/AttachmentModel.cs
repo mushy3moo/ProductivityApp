@@ -10,8 +10,14 @@ namespace ProductivityApp.Models
     {
         [JsonProperty("id")]
         public string Id { get; set; }
+
+        [JsonProperty("fileName")]
         public string FileName { get; set; }
+
+        [JsonProperty("fileContent")]
         public byte[] FileContent { get; set; }
+
+        [JsonProperty("fileTypeIcon")]
         public string FileTypeIcon { get; set; }
     }
 }

@@ -17,52 +17,56 @@ namespace ProductivityApp.Services
 
         public async Task<bool> AddItemAsync(T item)
         {
-            await _DataStore.SaveItemAsync(item);
-
-            return await Task.FromResult(true);
+            return await _DataStore.SaveItemAsync(item);
         }
 
-        public async Task<bool> AddItemsAsync(List<T> items)
+        public async Task<bool> AddItemsAsync(IEnumerable<T> items)
         {
-            await _DataStore.SaveItemsAsync(items);
-
-            return await Task.FromResult(true);
+            return await _DataStore.SaveAllItemsAsync(items.ToList());
         }
 
         public async Task<T> GetItemByIdAsync(string id)
         {
-            var result = await GetItemsByIdAsync();
+            var result = await GetAllItemsAsync();
             var items = result.ToList();
 
             return items.FirstOrDefault(item => (item as IModel).Id == id);
         }
-
-        public async Task<IEnumerable<T>> GetItemsByIdAsync(bool forceRefresh = false)
+        public async Task<T> GetItemAsync(T item)
         {
-            return await _DataStore.LoadItemsAsync();
+            return await GetItemByIdAsync((item as IModel).Id);
+        }
+
+        public async Task<IEnumerable<T>> GetAllItemsAsync(bool forceRefresh = false)
+        {
+            return await _DataStore.LoadAllItemsAsync();
         }
 
         public async Task<bool> UpdateItemAsync(T item)
         {
-            var result = await GetItemsByIdAsync();
+            var result = await GetAllItemsAsync();
             var items = result.ToList();
-            var oldItem = await GetItemByIdAsync((item as IModel).Id);
+            var oldItem = items.FirstOrDefault(i => (i as IModel).Id == (item as IModel).Id);
             items.Remove(oldItem);
             items.Add(item);
-            await AddItemsAsync(items);
 
-            return await Task.FromResult(true);
+            return await AddItemsAsync(items);
         }
 
         public async Task<bool> DeleteItemByIdAsync(string id)
         {
-            var result = await GetItemsByIdAsync();
+            var result = await GetAllItemsAsync();
             var items = result.ToList();
-            var item = await GetItemByIdAsync(id);
+            var item = items.FirstOrDefault(i => (i as IModel).Id == id);
             items.Remove(item);
-            await AddItemsAsync(items);
+            
+            return await AddItemsAsync(items);
+        }
 
-            return await Task.FromResult(true);
+        public async Task<bool> DeleteAllItemAsync(bool forceRefresh = false)
+        {
+            var items = new List<T>();
+            return await _DataStore.SaveAllItemsAsync(items);
         }
     }
 }

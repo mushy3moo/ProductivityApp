@@ -271,9 +271,10 @@
     <Compile Include="UiTests\Pages\PlatformQuery.cs" />
     <Compile Include="UiTests\Pages\MilestonesPageHelper.cs" />
     <Compile Include="UiTests\AddMilestonePageTests.cs" />
+    <Compile Include="UnitTests\ServiceTests\LocalDataStoreTests.cs" />
     <Compile Include="UnitTests\ViewModelTests\AddMilestoneViewModelTests.cs" />
     <Compile Include="UnitTests\ServiceTests\AttachmentServiceTests.cs" />
-    <Compile Include="UnitTests\ServiceTests\LocalDataServiceTests.cs" />
+    <Compile Include="UnitTests\ServiceTests\DataServiceTests.cs" />
     <Compile Include="UnitTests\ServiceTests\MilestoneServiceTests.cs" />
     <Compile Include="UiTests\MilestonePageTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -296,6 +297,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UiTests\Screenshots\" />
+    <Folder Include="UnitTests\Mock\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

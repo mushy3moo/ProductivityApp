@@ -49,13 +49,41 @@ namespace ProductivityAppTests
 
         [TestCase(null)]
         [TestCase("  ")]
-        public void SetIconImageFromMime_Returns_WhenStringIs_NullOrWhiteSpace(string contentType)
+        [TestCase("image")]
+        public void GetFileTypeIconFromMime_ReturnsIconNone_WhenStringIs_NullOrWhiteSpace(string contentType)
         {
             var expectedResult = "icon_none.png";
 
             using (var attachmentHelper = new AttachmentHelper())
             {
-                var result = attachmentHelper.SetIconImageFromMime(contentType);
+                var result = attachmentHelper.GetFileTypeIconFromMime(contentType);
+
+                Assert.That(result, Is.EqualTo(expectedResult));
+            }
+        }
+
+        [TestCase("image/png", "icon_image.png")]
+        [TestCase("audio/mp3", "icon_audio.png")]
+        [TestCase("video/mp4", "icon_video.png")]
+        [TestCase("text/plain", "icon_txt.png")]
+        [TestCase("text/html", "icon_html.png")]
+        [TestCase("text/css", "icon_css.png")]
+        [TestCase("application/javascript", "icon_java.png")]
+        [TestCase("application/json", "icon_json.png")]
+        [TestCase("application/xml", "icon_xml.png")]
+        [TestCase("application/pdf", "icon_pdf.png")]
+        [TestCase("application/msword", "icon_doc.png")]
+        [TestCase("application/vnd.openxmlformats-officedocument.wordprocessingml.document", "icon_doc.png")]
+        [TestCase("application/vnd.ms-excel", "icon_xls.png")]
+        [TestCase("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "icon_xls.png")]
+        [TestCase("application/vnd.ms-powerpoint", "icon_ppt.png")]
+        [TestCase("application/vnd.openxmlformats-officedocument.presentationml.presentation", "icon_ppt.png")]
+        [TestCase("unknown/unknown", "icon_none.png")]
+        public void GetFileTypeIconFromMime_ReturnsCorrectIcon_WhenStringIs_ValidMimeType(string contentType, string expectedResult)
+        {
+            using (var attachmentHelper = new AttachmentHelper())
+            {
+                var result = attachmentHelper.GetFileTypeIconFromMime(contentType);
 
                 Assert.That(result, Is.EqualTo(expectedResult));
             }

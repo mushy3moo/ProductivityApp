@@ -29,7 +29,7 @@ namespace ProductivityApp.Helpers
             }
         }
 
-        public string SetIconImageFromMime(string contentType)
+        public string GetFileTypeIconFromMime(string contentType)
         {
             var type = string.Empty;
             var subType = string.Empty;
@@ -37,8 +37,11 @@ namespace ProductivityApp.Helpers
             if (!string.IsNullOrWhiteSpace(contentType))
             {
                 contentType = contentType.ToLower();
-                type = contentType.Split('/')[0];
-                subType = contentType.Split('/')[1];
+                if (contentType.Contains("/"))
+                {
+                    type = contentType.Split('/')[0];
+                    subType = contentType.Split('/')[1];
+                }
             }
 
             string source = type switch

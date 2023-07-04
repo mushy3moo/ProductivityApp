@@ -36,9 +36,9 @@ namespace ProductivityApp.Services
             return await Task.FromResult(true);
         }
 
-        public async Task<bool> AddItemsAsync(List<MilestoneModel> items)
+        public async Task<bool> AddItemsAsync(IEnumerable<MilestoneModel> items)
         {
-            items.ForEach(item => milestones.Add(item));
+            items.ToList().ForEach(item => milestones.Add(item));
 
             return await Task.FromResult(true);
         }
@@ -65,7 +65,7 @@ namespace ProductivityApp.Services
             return await Task.FromResult(milestones.FirstOrDefault(s => s.Id == id));
         }
 
-        public async Task<IEnumerable<MilestoneModel>> GetItemsByIdAsync(bool forceRefresh = false)
+        public async Task<IEnumerable<MilestoneModel>> GetAllItemsAsync(bool forceRefresh = false)
         {
             return await Task.FromResult(milestones);
         }
@@ -102,6 +102,16 @@ namespace ProductivityApp.Services
             }
 
             return localMilestones;
+        }
+
+        public Task<MilestoneModel> GetItemAsync(MilestoneModel item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteAllItemAsync(bool forceRefresh = false)
+        {
+            throw new NotImplementedException();
         }
     }
 }

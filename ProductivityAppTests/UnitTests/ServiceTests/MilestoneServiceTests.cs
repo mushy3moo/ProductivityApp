@@ -19,7 +19,7 @@ namespace ProductivityAppTests.UnitTests
             var dataStore = new MilestoneService();
 
             var result = await dataStore.AddItemAsync(expectedMilestone);
-            var resultData = await dataStore.GetItemsByIdAsync();
+            var resultData = await dataStore.GetAllItemsAsync();
 
             Assert.Multiple(() =>
             {
@@ -40,7 +40,7 @@ namespace ProductivityAppTests.UnitTests
             var dataStore = new MilestoneService();
 
             var result = await dataStore.AddItemsAsync(expectedMilestones);
-            var resultData = await dataStore.GetItemsByIdAsync();
+            var resultData = await dataStore.GetAllItemsAsync();
 
             Assert.Multiple(() =>
             {
@@ -55,7 +55,7 @@ namespace ProductivityAppTests.UnitTests
         public async Task GetItemAsync_ReturnsNoCountWhenEmpty()
         {
             var dataStore = new MilestoneService();
-            var result = await dataStore.GetItemsByIdAsync();
+            var result = await dataStore.GetAllItemsAsync();
 
             Assert.That(result.Count, Is.EqualTo(0));
         }
@@ -85,7 +85,7 @@ namespace ProductivityAppTests.UnitTests
             var dataStore = new MilestoneService();
 
             await dataStore.AddItemsAsync(milestoneList);
-            var data = await dataStore.GetItemsByIdAsync();
+            var data = await dataStore.GetAllItemsAsync();
             var result = data.ToList();
 
             Assert.That(result, Is.EqualTo(milestoneList));
