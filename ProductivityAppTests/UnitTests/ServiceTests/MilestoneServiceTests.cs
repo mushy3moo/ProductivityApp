@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.IO;
 using Newtonsoft.Json;
 
-namespace ProductivityAppTests.UnitTests
+namespace ProductivityAppTests.UnitTests.ServiceTests
 {
     public class MilestoneServiceTests
     {

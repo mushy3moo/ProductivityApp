@@ -12,7 +12,8 @@ namespace ProductivityApp.Services
         Task<T> GetItemByIdAsync(string id);
         Task<IEnumerable<T>> GetAllItemsAsync(bool forceRefresh = false);
         Task<bool> UpdateItemAsync(T item);
+        Task<bool> DeleteItemAsync(T item);
         Task<bool> DeleteItemByIdAsync(string id);
-        Task<bool> DeleteAllItemAsync(bool forceRefresh = false);
+        Task<bool> DeleteAllItemsAsync(bool forceRefresh = false);
     }
 }

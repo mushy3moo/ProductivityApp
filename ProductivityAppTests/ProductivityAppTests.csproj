@@ -261,6 +261,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UnitTests\Fakes\FakeDataStore.cs" />
     <Compile Include="UnitTests\HelperTests\AttachmentHelperTests.cs" />
     <Compile Include="UiTests\AppManager.cs" />
     <Compile Include="UiTests\BaseTestFixture.cs" />
@@ -297,7 +298,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UiTests\Screenshots\" />
-    <Folder Include="UnitTests\Mock\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

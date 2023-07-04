@@ -22,7 +22,7 @@ namespace ProductivityApp.Services
 
         public async Task<bool> AddItemsAsync(IEnumerable<T> items)
         {
-            return await _DataStore.SaveAllItemsAsync(items.ToList());
+            return await _DataStore.SaveAllItemsAsync(items);
         }
 
         public async Task<T> GetItemByIdAsync(string id)
@@ -44,29 +44,45 @@ namespace ProductivityApp.Services
 
         public async Task<bool> UpdateItemAsync(T item)
         {
+            var isUpdated = false;
             var result = await GetAllItemsAsync();
             var items = result.ToList();
-            var oldItem = items.FirstOrDefault(i => (i as IModel).Id == (item as IModel).Id);
-            items.Remove(oldItem);
-            items.Add(item);
 
-            return await AddItemsAsync(items);
+            var oldItem = items.FirstOrDefault(i => (i as IModel).Id == (item as IModel).Id);
+            if(oldItem != null)
+            {
+                items.Remove(oldItem);
+                items.Add(item);
+                isUpdated = await AddItemsAsync(items);
+            }
+
+            return isUpdated;
         }
 
         public async Task<bool> DeleteItemByIdAsync(string id)
         {
+            var isDeleted = false;
             var result = await GetAllItemsAsync();
             var items = result.ToList();
+
             var item = items.FirstOrDefault(i => (i as IModel).Id == id);
-            items.Remove(item);
-            
-            return await AddItemsAsync(items);
+            if(item != null)
+            {
+                items.Remove(item);
+                isDeleted = await AddItemsAsync(items);
+            }
+
+            return isDeleted;
         }
 
-        public async Task<bool> DeleteAllItemAsync(bool forceRefresh = false)
+        public async Task<bool> DeleteItemAsync(T item)
         {
-            var items = new List<T>();
-            return await _DataStore.SaveAllItemsAsync(items);
+            return await DeleteItemByIdAsync((item as IModel).Id);
+        }
+
+        public async Task<bool> DeleteAllItemsAsync(bool forceRefresh = false)
+        {
+            return await _DataStore.SaveAllItemsAsync(new List<T>());
         }
     }
 }

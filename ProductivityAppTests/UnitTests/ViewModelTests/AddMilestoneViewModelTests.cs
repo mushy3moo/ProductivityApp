@@ -8,7 +8,7 @@ using ProductivityApp.ViewModels;
 using Xamarin.Forms;
 using Autofac.Extras.Moq;
 
-namespace ProductivityAppTests.UnitTests
+namespace ProductivityAppTests.UnitTests.ViewModelTests
 {
     public class AddMilestoneViewModelTests
     {

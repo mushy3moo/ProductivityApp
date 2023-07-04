@@ -8,7 +8,7 @@ using ProductivityApp.Models;
 using ProductivityApp.Services;
 using ProductivityApp.ViewModels;
 
-namespace ProductivityAppTests.UnitTests
+namespace ProductivityAppTests.UnitTests.ViewTests
 {
     public class MilestonesPageTests
     {

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProductivityAppTests.UnitTests
+namespace ProductivityAppTests.UnitTests.ServiceTests
 {
     public class AttachmentServiceTests
     {

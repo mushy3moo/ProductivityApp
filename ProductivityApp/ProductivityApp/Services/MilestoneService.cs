@@ -109,7 +109,12 @@ namespace ProductivityApp.Services
             throw new NotImplementedException();
         }
 
-        public Task<bool> DeleteAllItemAsync(bool forceRefresh = false)
+        public Task<bool> DeleteAllItemsAsync(bool forceRefresh = false)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteItemAsync(MilestoneModel item)
         {
             throw new NotImplementedException();
         }

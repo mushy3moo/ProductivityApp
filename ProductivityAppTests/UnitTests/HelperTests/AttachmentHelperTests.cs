@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProductivityAppTests
+namespace ProductivityAppTests.UnitTests.HelperTests
 {
     [TestFixture]
     public class AttachmentHelperTests

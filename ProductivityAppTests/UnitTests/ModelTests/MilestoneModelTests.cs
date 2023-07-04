@@ -2,7 +2,7 @@
 using ProductivityApp.Models;
 using System;
 
-namespace ProductivityAppTests.UnitTests
+namespace ProductivityAppTests.UnitTests.ModelTests
 {
     public class MilestoneModelTests
     {
